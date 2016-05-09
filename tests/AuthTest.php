@@ -26,6 +26,19 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(44, strlen($token));
     }
 
+    public function testKeepAlive()
+    {
+        $token = Betfair::auth()->login($this->appKey, $this->username, $this->password);
+
+        $result = Betfair::auth()->keepAlive($this->appKey, $token);
+        $result = Betfair::auth()->keepAlive($this->appKey, $token);
+        $result = Betfair::auth()->keepAlive($this->appKey, $token);
+
+        // Test confirms that all keep alive requests received SUCCESS responses,
+        // otherwise an exception would have been thrown.
+        $this->addToAssertionCount(1);
+    }
+
     public function testLogout()
     {
         $token = Betfair::auth()->login($this->appKey, $this->username, $this->password);

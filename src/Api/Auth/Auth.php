@@ -27,6 +27,14 @@ class Auth
         return $result->token;
     }
 
+    public function keepAlive($appKey, $sessionToken)
+    {
+        $this->httpClient
+            ->setEndPoint($this->endPoint.'keepAlive/')
+            ->setHeaders(['Accept' => 'application/json', 'X-Application' => $appKey, 'X-Authentication' => $sessionToken])
+            ->send();
+    }
+
     public function logout($appKey, $sessionToken)
     {
         $this->httpClient
