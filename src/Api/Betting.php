@@ -17,7 +17,9 @@ class Betting
     }
 
     /**
-     * Six Excahnge methods have an identical API, so we bundle them into a single magic call
+     * Six Excahnge methods have an identical API, so we bundle them into a single magic call e,g,
+     * @method listCompetitions(string $appKey, string $sessionToken, array $filters, string $locale)
+     * @return array
      */
     public function __call($method, $params)
     {
