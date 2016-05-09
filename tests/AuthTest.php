@@ -38,7 +38,7 @@ class AuthTest extends BaseTest
 
         Betfair::auth()->logout($this->appKey, $token);
 
-        // // Test simply confirms that logout didn't fail.
+        // Test simply confirms that logout didn't fail.
         $this->addToAssertionCount(1);
     }
 
