@@ -9,7 +9,7 @@ class Client
 {
     protected $guzzleClient;
 
-    protected $method = '';
+    protected $method = 'get';
 
     protected $uri = '';
 
