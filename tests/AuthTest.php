@@ -17,4 +17,12 @@ class AuthTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('PeterColes\Betfair\Api\Auth\Auth', Betfair::auth());
     }
+
+    public function testLogin()
+    {
+        $token = Betfair::auth()->login($this->appKey, $this->username, $this->password);
+
+        $this->assertTrue(is_string($token));
+        $this->assertEquals(44, strlen($token));
+    }
 }
