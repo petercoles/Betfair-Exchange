@@ -2,8 +2,9 @@
 
 namespace PeterColes\Betfair\Http;
 
-use GuzzleHttp\Client;
 use Exception;
+use GuzzleHttp\Client;
+use PeterColes\Betfair\Api\BettingTypes\MarketFilter;
 
 class Client
 {
@@ -65,12 +66,37 @@ class Client
     /**
      * Setter for request form data.
      *
-     * @param arrat $formData
+     * @param array $formData
      * @return PeterColes\Betfair\Http\Client
      */
     public function setFormData(array $formData)
     {
         $this->options['form_params'] = $formData;
+        return $this;
+    }
+
+    /**
+     * Setter for request filter(s).
+     *
+     * @param  MarketFilter $filter
+     * @return PeterColes\Betfair\Http\Client
+     */
+    public function setFilter(MarketFilter $filter) {
+        $this->options['json']['filter'] = $filter;
+        return $this;
+    }
+
+    /**
+     * Setter for request locale.
+     * It's optional, so we only pass a value if there is one
+     *
+     * @param string|null $locale
+     * @return PeterColes\Betfair\Http\Client
+     */
+    public function setLocale($locale) {
+        if ($locale) {
+            $this->options['json']['locale'] = $locale;
+        }
         return $this;
     }
 
@@ -90,9 +116,10 @@ class Client
         }
 
         $body = $this->getBody($response);
-        if ($body->status != 'SUCCESS') {
+
+        if (is_object($body) && $body->status != 'SUCCESS') {
             $this->handleApiException($body->error);
-        } 
+        }
 
         return $body;
     }
