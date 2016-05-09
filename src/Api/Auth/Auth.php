@@ -26,4 +26,12 @@ class Auth
 
         return $result->token;
     }
+
+    public function logout($appKey, $sessionToken)
+    {
+        $this->httpClient
+            ->setEndPoint($this->endPoint.'logout/')
+            ->setHeaders(['Accept' => 'application/json', 'X-Application' => $appKey, 'X-Authentication' => $sessionToken])
+            ->send();
+    }
 }
