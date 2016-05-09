@@ -6,6 +6,10 @@ class Betfair
 {
     public static function __callStatic($method, $params)
     {
-        return new \PeterColes\Betfair\Api\Auth\Auth;
+        $class = 'PeterColes\\Betfair\\Api\\'.ucfirst($method);
+
+        if (class_exists($class)) {
+            return new $class;
+        }
     }
 }

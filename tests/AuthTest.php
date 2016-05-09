@@ -8,7 +8,7 @@ class AuthTest extends BaseTest
 {
     public function testInstantiation()
     {
-        $this->assertInstanceOf('PeterColes\Betfair\Api\Auth\Auth', Betfair::auth());
+        $this->assertInstanceOf('PeterColes\Betfair\Api\Auth', Betfair::auth());
     }
 
     public function testLogin()

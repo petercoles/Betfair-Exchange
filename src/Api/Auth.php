@@ -1,6 +1,6 @@
 <?php
 
-namespace PeterColes\Betfair\Api\Auth;
+namespace PeterColes\Betfair\Api;
 
 use PeterColes\Betfair\Http\Client as HttpClient;
 
