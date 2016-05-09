@@ -29,7 +29,7 @@ class Betting
             return $this->httpClient
                 ->setMethod('post')
                 ->setEndPoint(self::ENDPOINT.$method.'/')
-                ->setHeaders(['Accept' => 'application/json', 'X-Application' => $params[0], 'X-Authentication' => $params[1], 'Content-Type' => 'application/json'])
+                ->addHeaders(['X-Application' => $params[0], 'X-Authentication' => $params[1], 'Content-Type' => 'application/json'])
                 ->setFilter(new MarketFilter($filters))
                 ->setLocale($locale)
                 ->send();

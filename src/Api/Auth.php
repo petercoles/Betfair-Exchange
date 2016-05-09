@@ -20,7 +20,7 @@ class Auth
         $result = $this->httpClient
             ->setMethod('post')
             ->setEndPoint(self::ENDPOINT.'login/')
-            ->setHeaders(['Accept' => 'application/json', 'X-Application' => $appKey])
+            ->addHeaders(['X-Application' => $appKey])
             ->setFormData(['username' => $username, 'password' => $password])
             ->send();
 
@@ -31,7 +31,7 @@ class Auth
     {
         $this->httpClient
             ->setEndPoint(self::ENDPOINT.'keepAlive/')
-            ->setHeaders(['Accept' => 'application/json', 'X-Application' => $appKey, 'X-Authentication' => $sessionToken])
+            ->addHeaders(['X-Application' => $appKey, 'X-Authentication' => $sessionToken])
             ->send();
     }
 
@@ -39,7 +39,7 @@ class Auth
     {
         $this->httpClient
             ->setEndPoint(self::ENDPOINT.'logout/')
-            ->setHeaders(['Accept' => 'application/json', 'X-Application' => $appKey, 'X-Authentication' => $sessionToken])
+            ->addHeaders(['X-Application' => $appKey, 'X-Authentication' => $sessionToken])
             ->send();
     }
 }

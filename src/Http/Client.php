@@ -25,6 +25,7 @@ class Client
     public function __construct($client = null)
     {
         $this->guzzleClient = $client ?: new Client;
+        $this->options['headers'] = ['Accept' => 'application/json'];
     }
 
     /**
@@ -57,9 +58,9 @@ class Client
      * @param array $headers
      * @return PeterColes\Betfair\Http\Client
      */
-    public function setHeaders(array $headers)
+    public function addHeaders(array $headers)
     {
-        $this->options['headers'] = $headers;
+        $this->options['headers'] = array_merge($this->options['headers'], $headers);
         return $this;
     }
 
