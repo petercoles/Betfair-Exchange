@@ -15,6 +15,9 @@ composer require petercoles/betfair
 ## Usage
 
 
+## Testing
+
+The package comes with a test suite. Some of the tests will simulate http activity (i.e. won't hit the Betfair servers), but some will test connectivity and will need valud credentials. These should be placed in a file called .env.php which can be created by copying the .env.example.php file in the package's root folder.
 
 ## Issues
 
