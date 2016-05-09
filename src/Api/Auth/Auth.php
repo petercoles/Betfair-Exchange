@@ -6,9 +6,9 @@ use PeterColes\Betfair\Http\Client as HttpClient;
 
 class Auth
 {
-    protected $httpClient;
+    const ENDPOINT = 'https://identitysso.betfair.com/api/';
 
-    protected $endPoint = 'https://identitysso.betfair.com/api/';
+    protected $httpClient;
 
     public function __construct(HttpClient $httpClient = null)
     {
@@ -19,7 +19,7 @@ class Auth
     {
         $result = $this->httpClient
             ->setMethod('post')
-            ->setEndPoint($this->endPoint.'login/')
+            ->setEndPoint(self::ENDPOINT.'login/')
             ->setHeaders(['Accept' => 'application/json', 'X-Application' => $appKey])
             ->setFormData(['username' => $username, 'password' => $password])
             ->send();
@@ -30,7 +30,7 @@ class Auth
     public function keepAlive($appKey, $sessionToken)
     {
         $this->httpClient
-            ->setEndPoint($this->endPoint.'keepAlive/')
+            ->setEndPoint(self::ENDPOINT.'keepAlive/')
             ->setHeaders(['Accept' => 'application/json', 'X-Application' => $appKey, 'X-Authentication' => $sessionToken])
             ->send();
     }
@@ -38,7 +38,7 @@ class Auth
     public function logout($appKey, $sessionToken)
     {
         $this->httpClient
-            ->setEndPoint($this->endPoint.'logout/')
+            ->setEndPoint(self::ENDPOINT.'logout/')
             ->setHeaders(['Accept' => 'application/json', 'X-Application' => $appKey, 'X-Authentication' => $sessionToken])
             ->send();
     }
