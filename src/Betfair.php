@@ -9,7 +9,7 @@ class Betfair
         $class = 'PeterColes\\Betfair\\Api\\'.ucfirst($method);
 
         if ($method == 'init') {
-            return new $class($params[0], $params[1], $params[2]);
+            return new $class($params[ 0 ], $params[ 1 ], $params[ 2 ]);
         }
 
         if (class_exists($class)) {

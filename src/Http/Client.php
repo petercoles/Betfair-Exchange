@@ -72,7 +72,7 @@ class Client
      * @param array $headers
      * @return Client
      */
-    public function authHeaders(array $headers = [])
+    public function authHeaders(array $headers = [ ])
     {
         if (count($headers) == 0) {
             $headers = [ 'X-Application' => Auth::$appKey, 'X-Authentication' => Auth::$sessionToken ];
