@@ -129,7 +129,7 @@ class Client
     /**
      * Get status code from http response.
      *
-     * @param GuzzleResponse $response
+     * @param Response $response
      * @return integer
      */
     protected function getStatus(Response $response)
@@ -140,7 +140,7 @@ class Client
     /**
      * Get http response body, cast to json and decode.
      *
-     * @param GuzzleHttp\Response object $response
+     * @param Response object $response
      * @return array
      */
     protected function getBody(Response $response)
