@@ -2,9 +2,10 @@
 
 ## Introduction
 
-This is a pre-alpha package designed to provide a simple interface to the Betfair Exchange API. It's not yet suitable for production use and the API will change (guaranteed).
+*This is a pre-alpha package* designed to provide a simple interface to the Betfair Exchange API. It's not yet suitable for production use and its API will change (guaranteed).
 
 If you're looking for something usable now, try [Daniel D'Angeli's full blooded package](github.com/danieledangeli/betfair-php) or [Dan Cotora's very lightweight wrapper](github.com/dcro/simple-betfair-php-api).
+
 
 ## Installation
 
@@ -35,7 +36,7 @@ Three authentication methods are supplied:
 . logout(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>);
 . keepAlive(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>);
 ```
-The Keep alive method extends your Betfair session. Betfair sessions for the UK exchange are currently 4 hours long, so usually just logging is good enough.
+The Keep alive method extends your Betfair session. Betfair sessions for the UK exchange are currently 4 hours long, so usually just logging in is good enough.
 
 Betting information can be obtained from the betting subsystem. Currently only the following methods are supported (which is of very limited practical use), but more are coming
 ```
@@ -47,13 +48,16 @@ Betting information can be obtained from the betting subsystem. Currently only t
 . listVenues(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>, (optional) <ARRAY_OF_FILTERS>, (optional) <LOCALE>);
 ```
 
+
 ## Testing
 
 The package comes with a test suite. Some of the tests will simulate http activity (i.e. won't hit the Betfair servers), but some will test connectivity and will need valud credentials. These should be placed in a file called .env.php which can be created by copying the .env.example.php file in the package's root folder.
 
+
 ## Issues
 
 This package was developed to meet a specific need and then generalised for wider use. If you have a use case not currently met, or see something that appears to not be working correctly, please raise an issue at the [github repo](https://github.com/petercoles/betfair/issues).
+
 
 ## License
 
