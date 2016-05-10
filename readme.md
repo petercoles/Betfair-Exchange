@@ -61,7 +61,7 @@ The package comes with a test suite. Some of the tests will simulate http activi
 
 ## Issues
 
-This package was developed to meet a specific need and then generalised for wider use. If you have a use case not currently met, or see something that appears to not be working correctly, please raise an issue at the [github repo](https://github.com/petercoles/betfair/issues).
+This package was developed to meet a specific need and then generalised for wider use. If you have a use case not currently met, or see something that appears to not be working correctly, please raise an issue at the [github repo](https://github.com/petercoles/betfair-exchange/issues).
 
 
 ## License
