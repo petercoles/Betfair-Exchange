@@ -9,7 +9,7 @@
 
 *This is a pre-alpha package* designed to provide a simple interface to the Betfair Exchange API. It's not yet suitable for production use and its API will change (guaranteed).
 
-If you're looking for something usable now, try [Daniel D'Angeli's full blooded package](github.com/danieledangeli/betfair-php) or [Dan Cotora's very lightweight wrapper](github.com/dcro/simple-betfair-php-api).
+If you're looking for something usable now, try [Daniel D'Angeli's full blooded package](https://github.com/danieledangeli/betfair-php) or [Dan Cotora's very lightweight wrapper](https://github.com/dcro/simple-betfair-php-api).
 
 
 ## Installation
