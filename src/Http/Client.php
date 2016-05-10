@@ -6,7 +6,7 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use PeterColes\Betfair\Api\Auth;
-use PeterColes\Betfair\Api\BettingTypes\MarketFilter;
+use stdClass;
 
 class Client
 {
@@ -96,11 +96,11 @@ class Client
     /**
      * Setter for request filter(s).
      *
-     * @param  MarketFilter $filter
+     * @param  array|null $filter
      * @return Client
      */
-    public function setFilter(MarketFilter $filter) {
-        $this->options[ 'json' ][ 'filter' ] = $filter;
+    public function setFilter($filter = null) {
+        $this->options[ 'json' ][ 'filter' ] = $filter?: new stdClass;
         return $this;
     }
 

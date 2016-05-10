@@ -2,7 +2,6 @@
 
 namespace PeterColes\Betfair\Api;
 
-use PeterColes\Betfair\Api\BettingTypes\MarketFilter;
 use PeterColes\Betfair\Http\Client as HttpClient;
 
 class Betting
@@ -33,7 +32,7 @@ class Betting
                 ->setEndPoint(self::ENDPOINT.$method.'/')
                 ->authHeaders()
                 ->addHeaders([ 'Content-Type' => 'application/json' ])
-                ->setFilter(new MarketFilter($filters))
+                ->setFilter($filters)
                 ->setLocale($locale)
                 ->send();
         }
