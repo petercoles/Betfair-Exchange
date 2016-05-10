@@ -32,7 +32,7 @@ class Client
      * Setter for request method.
      *
      * @param string $method
-     * @return PeterColes\Betfair\Http\Client
+     * @return Client
      */
     public function setMethod(string $method)
     {
@@ -44,7 +44,7 @@ class Client
      * Setter for request end point URI.
      *
      * @param string $endPoint
-     * @return PeterColes\Betfair\Http\Client
+     * @return Client
      */
     public function setEndPoint(string $endPoint)
     {
@@ -56,7 +56,7 @@ class Client
      * Setter for request headers.
      *
      * @param array $headers
-     * @return PeterColes\Betfair\Http\Client
+     * @return Client
      */
     public function addHeaders(array $headers)
     {
@@ -68,7 +68,7 @@ class Client
      * Setter for request form data.
      *
      * @param array $formData
-     * @return PeterColes\Betfair\Http\Client
+     * @return Client
      */
     public function setFormData(array $formData)
     {
@@ -80,7 +80,7 @@ class Client
      * Setter for request filter(s).
      *
      * @param  MarketFilter $filter
-     * @return PeterColes\Betfair\Http\Client
+     * @return Client
      */
     public function setFilter(MarketFilter $filter) {
         $this->options['json']['filter'] = $filter;
@@ -92,7 +92,7 @@ class Client
      * It's optional, so we only pass a value if there is one
      *
      * @param string|null $locale
-     * @return PeterColes\Betfair\Http\Client
+     * @return Client
      */
     public function setLocale($locale) {
         if ($locale) {
