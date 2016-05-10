@@ -1,5 +1,10 @@
 # Betfair Exchange API Wrapper
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/1b24740e-5b91-467e-8d44-3a2c158fafaa/mini.png)](https://insight.sensiolabs.com/projects/1b24740e-5b91-467e-8d44-3a2c158fafaa)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/petercoles/Betfair-Exchange/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/petercoles/Betfair-Exchange/?branch=master)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+
+
 ## Introduction
 
 *This is a pre-alpha package* designed to provide a simple interface to the Betfair Exchange API. It's not yet suitable for production use and its API will change (guaranteed).
