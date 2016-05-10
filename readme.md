@@ -27,32 +27,31 @@ Currently the package supports only the UK exchange and a very limited (but grow
 
 Each Betfair request starts with a static call to one of the packages subsystems. Currently there are two: "auth" and "betting".
 
-All requests require to you be logged in to the Betfair Exchange, otherwise it won't talk to you. Currently your application has to do this manually, though that's likely to change in later versions of the package.
-
-So your first call will always be
+All requests require to you be logged in to the Betfair Exchange, otherwise it won't talk to you. So your first call will always be
 ```
-$sessionToken = Betfair::auth()->login(<YOUR_APP_KEY>, <YOUR_USERNAME>, <YOUR_PASSWORD>);
+$sessionToken = Betfair::auth()->init(<YOUR_APP_KEY>, <YOUR_USERNAME>, <YOUR_PASSWORD>);
 ```
-All future calls will require your APP_KEY and this session token (though again, that's likely to change fairly soon).
 
-Three authentication methods are supplied:
+This will store your APP_KEY and retrieve and store a SESSION_KEY, which will be used to authenticate all subsequent requests.
+
+Three manual authentication methods are supplied, though its unlikely that you'll need to use them
 ```
 . login(<YOUR_APP_KEY>, <YOUR_USERNAME>, <YOUR_PASSWORD>);
-. logout(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>);
-. keepAlive(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>);
+. logout();
+. keepAlive();
 ```
 The Keep alive method extends your Betfair session. Betfair sessions for the UK exchange are currently 4 hours long, so usually just logging in is good enough.
 
 Betting information can be obtained from the betting subsystem. Currently only the following methods are supported (which is of very limited practical use), but more are coming
 ```
-. listCompetitions(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>, (optional) <ARRAY_OF_FILTERS>, (optional) <LOCALE>);
-. listCountries(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>, (optional) <ARRAY_OF_FILTERS>, (optional) <LOCALE>);
-. listEvents(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>, (optional) <ARRAY_OF_FILTERS>, (optional) <LOCALE>);
-. listEventTypes(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>, (optional) <ARRAY_OF_FILTERS>, (optional) <LOCALE>);
-. listMarketTypes(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>, (optional) <ARRAY_OF_FILTERS>, (optional) <LOCALE>);
-. listVenues(<YOUR_APP_KEY>, <YOUR_SESSION_TOKEN>, (optional) <ARRAY_OF_FILTERS>, (optional) <LOCALE>);
+. listCompetitions(<ARRAY_OF_FILTERS>, <LOCALE>);
+. listCountries(<ARRAY_OF_FILTERS>, <LOCALE>);
+. listEvents(<ARRAY_OF_FILTERS>, <LOCALE>);
+. listEventTypes(<ARRAY_OF_FILTERS>, <LOCALE>);
+. listMarketTypes(<ARRAY_OF_FILTERS>, <LOCALE>);
+. listVenues(<ARRAY_OF_FILTERS>, <LOCALE>);
 ```
-
+Both the parameters are optional.
 
 ## Testing
 

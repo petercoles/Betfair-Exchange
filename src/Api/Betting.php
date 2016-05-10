@@ -18,20 +18,21 @@ class Betting
 
     /**
      * Six Exchange methods have an identical API, so we bundle them into a single magic call e.g.
-     * @method listCompetitions(string $appKey, string $sessionToken, array $filters, string $locale)
+     * @method listCompetitions(array $filters, string $locale)
      * @return array
      */
     public function __call($method, $params)
     {
         if (in_array($method, [ 'listCompetitions', 'listCountries', 'listEvents', 'listEventTypes', 'listMarketTypes', 'listVenues' ])) {
 
-            $filters = isset($params[ 2 ]) ? $params[ 2 ] : [ ];
-            $locale = isset($params[ 3 ]) ? $params[ 3 ] : [ ];
+            $filters = isset($params[ 0 ]) ? $params[ 0 ] : [ ];
+            $locale = isset($params[ 1 ]) ? $params[ 1 ] : [ ];
 
             return $this->httpClient
                 ->setMethod('post')
                 ->setEndPoint(self::ENDPOINT.$method.'/')
-                ->addHeaders([ 'X-Application' => $params[ 0 ], 'X-Authentication' => $params[ 1 ], 'Content-Type' => 'application/json' ])
+                ->authHeaders()
+                ->addHeaders([ 'Content-Type' => 'application/json' ])
                 ->setFilter(new MarketFilter($filters))
                 ->setLocale($locale)
                 ->send();

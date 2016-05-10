@@ -5,6 +5,7 @@ namespace PeterColes\Betfair\Http;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
+use PeterColes\Betfair\Api\Auth;
 use PeterColes\Betfair\Api\BettingTypes\MarketFilter;
 
 class Client
@@ -61,6 +62,21 @@ class Client
      */
     public function addHeaders(array $headers)
     {
+        $this->options[ 'headers' ] = array_merge($this->options[ 'headers' ], $headers);
+        return $this;
+    }
+
+    /**
+     * Setter for authentication headers.
+     *
+     * @param array $headers
+     * @return Client
+     */
+    public function authHeaders(array $headers = [])
+    {
+        if (count($headers) == 0) {
+            $headers = [ 'X-Application' => Auth::$appKey, 'X-Authentication' => Auth::$sessionToken ];
+        }
         $this->options[ 'headers' ] = array_merge($this->options[ 'headers' ], $headers);
         return $this;
     }

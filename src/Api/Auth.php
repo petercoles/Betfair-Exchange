@@ -10,9 +10,19 @@ class Auth
 
     protected $httpClient;
 
+    public static $appKey;
+
+    public static $sessionToken;
+
     public function __construct(HttpClient $httpClient = null)
     {
         $this->httpClient = $httpClient ?: new HttpClient;
+    }
+
+    public function init($appKey, $username, $password)
+    {
+        self::$appKey = $appKey;
+        self::$sessionToken = $this->login($appKey, $username, $password);
     }
 
     public function login($appKey, $username, $password)
@@ -20,26 +30,26 @@ class Auth
         $result = $this->httpClient
             ->setMethod('post')
             ->setEndPoint(self::ENDPOINT.'login/')
-            ->addHeaders([ 'X-Application' => $appKey ])
+            ->authHeaders([ 'X-Application' => $appKey ])
             ->setFormData([ 'username' => $username, 'password' => $password ])
             ->send();
 
         return $result->token;
     }
 
-    public function keepAlive($appKey, $sessionToken)
+    public function keepAlive()
     {
         $this->httpClient
             ->setEndPoint(self::ENDPOINT.'keepAlive/')
-            ->addHeaders([ 'X-Application' => $appKey, 'X-Authentication' => $sessionToken ])
+            ->authHeaders()
             ->send();
     }
 
-    public function logout($appKey, $sessionToken)
+    public function logout()
     {
         $this->httpClient
             ->setEndPoint(self::ENDPOINT.'logout/')
-            ->addHeaders([ 'X-Application' => $appKey, 'X-Authentication' => $sessionToken ])
+            ->authHeaders()
             ->send();
     }
 }

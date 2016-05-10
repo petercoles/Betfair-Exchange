@@ -13,9 +13,9 @@ class BettingTest extends BaseTest
 
     public function testListCompetitions()
     {
-        $token = Betfair::auth()->login($this->appKey, $this->username, $this->password);
+        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
-        $result = Betfair::betting()->listCompetitions($this->appKey, $token);
+        $result = Betfair::betting()->listCompetitions();
 
         $this->assertTrue(is_array($result));
         $this->assertObjectHasAttribute('competition', $result[0]);
@@ -23,9 +23,9 @@ class BettingTest extends BaseTest
 
     public function testListCountries()
     {
-        $token = Betfair::auth()->login($this->appKey, $this->username, $this->password);
+        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
-        $result = Betfair::betting()->listCountries($this->appKey, $token);
+        $result = Betfair::betting()->listCountries();
 
         $this->assertTrue(is_array($result));
         $this->assertObjectHasAttribute('countryCode', $result[0]);
@@ -33,9 +33,9 @@ class BettingTest extends BaseTest
 
     public function testListEvents()
     {
-        $token = Betfair::auth()->login($this->appKey, $this->username, $this->password);
+        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
-        $result = Betfair::betting()->listEvents($this->appKey, $token);
+        $result = Betfair::betting()->listEvents();
 
         $this->assertTrue(is_array($result));
         $this->assertObjectHasAttribute('event', $result[0]);
@@ -43,9 +43,9 @@ class BettingTest extends BaseTest
 
     public function testListEventTypes()
     {
-        $token = Betfair::auth()->login($this->appKey, $this->username, $this->password);
+        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
-        $result = Betfair::betting()->listEventTypes($this->appKey, $token);
+        $result = Betfair::betting()->listEventTypes();
 
         $this->assertTrue(is_array($result));
         $this->assertObjectHasAttribute('eventType', $result[0]);
@@ -53,9 +53,9 @@ class BettingTest extends BaseTest
 
     public function testListMarketTypes()
     {
-        $token = Betfair::auth()->login($this->appKey, $this->username, $this->password);
+        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
-        $result = Betfair::betting()->listMarketTypes($this->appKey, $token);
+        $result = Betfair::betting()->listMarketTypes();
 
         $this->assertTrue(is_array($result));
         $this->assertObjectHasAttribute('marketType', $result[0]);
@@ -63,9 +63,9 @@ class BettingTest extends BaseTest
 
     public function testListVenues()
     {
-        $token = Betfair::auth()->login($this->appKey, $this->username, $this->password);
+        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
-        $result = Betfair::betting()->listVenues($this->appKey, $token);
+        $result = Betfair::betting()->listVenues();
 
         $this->assertTrue(is_array($result));
         $this->assertObjectHasAttribute('venue', $result[0]);
