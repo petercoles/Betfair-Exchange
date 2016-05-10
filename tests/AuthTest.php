@@ -7,12 +7,12 @@ use PeterColes\Betfair\Betfair;
 
 class AuthTest extends BaseTest
 {
-    public function testInstantiation()
+    public function testAuthClassInstantiation()
     {
         $this->assertInstanceOf('PeterColes\Betfair\Api\Auth', Betfair::auth());
     }
 
-    public function testLogin()
+    public function testLoginObtainsSessionToken()
     {
         $token = Betfair::auth()->login($this->appKey, $this->username, $this->password);
 
@@ -20,39 +20,56 @@ class AuthTest extends BaseTest
         $this->assertEquals(44, strlen($token));
     }
 
-    public function testInit()
+    public function testInitLoginsInFirstTimeOnly()
     {
         Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
+        // first init logs in
+        $firstSessionToken = Auth::$sessionToken;
+        $firstLastLogin = Auth::$lastLogin;
         $this->assertEquals($this->appKey, Auth::$appKey);
-        $this->assertTrue(is_string(Auth::$sessionToken));
-        $this->assertEquals(44, strlen(Auth::$sessionToken));
+        $this->assertTrue(is_string($firstSessionToken));
+        $this->assertEquals(44, strlen($firstSessionToken));
+
+        sleep(1); // ensure at least a second between inits to force a different timestamp
+        Betfair::auth()->init($this->appKey, $this->username, $this->password);
+
+        //second init should continue to use existing session token
+        $secondSessionToken = Auth::$sessionToken;
+        $secondLastLogin = Auth::$lastLogin;
+        $this->assertEquals($this->appKey, Auth::$appKey);
+        $this->assertEquals($firstSessionToken, $secondSessionToken);
+        $this->assertNotEquals($firstLastLogin, $secondLastLogin);
     }
 
-    public function testKeepAlive()
+    public function testKeepAliveUpdateLastLoginTimestamp()
     {
         $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
-        $result = Betfair::auth()->keepAlive();
-        $result = Betfair::auth()->keepAlive();
+        $firstSessionToken = Auth::$sessionToken;
+        $firstLastLogin = Auth::$lastLogin;
+
+        sleep(1); // delay to force a different timestamp
         $result = Betfair::auth()->keepAlive();
 
-        // Test confirms that all keep alive requests received SUCCESS responses,
-        // otherwise an exception would have been thrown.
-        $this->addToAssertionCount(1);
+        $secondSessionToken = Auth::$sessionToken;
+        $secondLastLogin = Auth::$lastLogin;
+
+        $this->assertGreaterThan($firstLastLogin, $secondLastLogin);
     }
 
-    public function testLogout()
+    public function testLogoutClearsLocalAuthData()
     {
         $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
         Betfair::auth()->logout();
 
-        // Test simply confirms that logout didn't fail.
-        $this->addToAssertionCount(1);
+        $this->assertNull(Auth::$appKey);
+        $this->assertNull(Auth::$sessionToken);
+        $this->assertNull(Auth::$lastLogin);
     }
 
-    public function testNoSessionAfterLogout()
+    public function testNoBetfairSessionAfterLogout()
     {
         $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
@@ -63,5 +80,14 @@ class AuthTest extends BaseTest
         // need more extensive exception handling (planned) to be sure.
         $this->setExpectedException('Exception');
         Betfair::auth()->logout();
+    }
+
+    public function testSessionRemaining()
+    {
+        Betfair::auth()->init($this->appKey, $this->username, $this->password);
+
+        sleep(2);
+
+        $this->assertEquals(Auth::SESSION_LENGTH - 2, Betfair::auth()->sessionRemaining());
     }
 }

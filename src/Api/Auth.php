@@ -8,11 +8,15 @@ class Auth
 {
     const ENDPOINT = 'https://identitysso.betfair.com/api/';
 
+    const SESSION_LENGTH = 4 * 60 * 60; // 4 hours
+
     protected $httpClient;
 
-    public static $appKey;
+    public static $appKey = null;
 
-    public static $sessionToken;
+    public static $sessionToken = null;
+
+    public static $lastLogin = null;
 
     public function __construct(HttpClient $httpClient = null)
     {
@@ -21,8 +25,12 @@ class Auth
 
     public function init($appKey, $username, $password)
     {
-        self::$appKey = $appKey;
-        self::$sessionToken = $this->login($appKey, $username, $password);
+        if ($appKey == self::$appKey && $this->sessionRemaining() > 5) {
+            $this->keepAlive();
+        } else {
+            self::$appKey = $appKey;
+            self::$sessionToken = $this->login($appKey, $username, $password);
+        }
     }
 
     public function login($appKey, $username, $password)
@@ -34,6 +42,8 @@ class Auth
             ->setFormData([ 'username' => $username, 'password' => $password ])
             ->send();
 
+        self::$lastLogin = time();
+
         return $result->token;
     }
 
@@ -43,6 +53,8 @@ class Auth
             ->setEndPoint(self::ENDPOINT.'keepAlive/')
             ->authHeaders()
             ->send();
+
+        self::$lastLogin = time();
     }
 
     public function logout()
@@ -51,5 +63,14 @@ class Auth
             ->setEndPoint(self::ENDPOINT.'logout/')
             ->authHeaders()
             ->send();
+
+        self::$appKey = null;
+        self::$sessionToken = null;
+        self::$lastLogin = null;
+    }
+
+    public function sessionRemaining()
+    {
+        return self::$lastLogin + self::SESSION_LENGTH - time();
     }
 }
