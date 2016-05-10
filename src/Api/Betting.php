@@ -17,7 +17,7 @@ class Betting
     }
 
     /**
-     * Six Excahnge methods have an identical API, so we bundle them into a single magic call e,g,
+     * Six Exchange methods have an identical API, so we bundle them into a single magic call e.g.
      * @method listCompetitions(string $appKey, string $sessionToken, array $filters, string $locale)
      * @return array
      */
