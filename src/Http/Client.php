@@ -14,7 +14,7 @@ class Client
 
     protected $uri = '';
 
-    protected $options = [];
+    protected $options = [ ];
 
     /**
      * instantiate Guzzle client (unless one is injected).
@@ -25,7 +25,7 @@ class Client
     public function __construct($client = null)
     {
         $this->guzzleClient = $client ?: new Client;
-        $this->options['headers'] = ['Accept' => 'application/json'];
+        $this->options[ 'headers' ] = [ 'Accept' => 'application/json' ];
     }
 
     /**
@@ -60,7 +60,7 @@ class Client
      */
     public function addHeaders(array $headers)
     {
-        $this->options['headers'] = array_merge($this->options['headers'], $headers);
+        $this->options[ 'headers' ] = array_merge($this->options[ 'headers' ], $headers);
         return $this;
     }
 
@@ -72,7 +72,7 @@ class Client
      */
     public function setFormData(array $formData)
     {
-        $this->options['form_params'] = $formData;
+        $this->options[ 'form_params' ] = $formData;
         return $this;
     }
 
@@ -83,7 +83,7 @@ class Client
      * @return Client
      */
     public function setFilter(MarketFilter $filter) {
-        $this->options['json']['filter'] = $filter;
+        $this->options[ 'json' ][ 'filter' ] = $filter;
         return $this;
     }
 
@@ -96,7 +96,7 @@ class Client
      */
     public function setLocale($locale) {
         if ($locale) {
-            $this->options['json']['locale'] = $locale;
+            $this->options[ 'json' ][ 'locale' ] = $locale;
         }
         return $this;
     }
