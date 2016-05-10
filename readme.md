@@ -27,18 +27,18 @@ Currently the package supports only the UK exchange and a very limited (but grow
 
 Each Betfair request starts with a static call to one of the packages subsystems. Currently there are two: "auth" and "betting".
 
-All requests require to you be logged in to the Betfair Exchange, otherwise it won't talk to you. So your first call will always be
+All requests require to you be logged in to the Betfair Exchange, otherwise it won't talk to you. So your first call will always be:
 ```
 $sessionToken = Betfair::auth()->init(<YOUR_APP_KEY>, <YOUR_USERNAME>, <YOUR_PASSWORD>);
 ```
+On a first call it will store your APP_KEY, login, retrieve a SESSION_TOKEN and store it. the session token will be used to authenticate all subsequent requests. It's safe, indeed recommended, to call init() before each group of requests. If there's an active session already, it will simply extend this session rather than logging in again.
 
-This will store your APP_KEY and retrieve and store a SESSION_KEY, which will be used to authenticate all subsequent requests.
-
-Three manual authentication methods are supplied, though its unlikely that you'll need to use them
+Four other authentication methods are available, though its unlikely that you'll need to use them
 ```
 . login(<YOUR_APP_KEY>, <YOUR_USERNAME>, <YOUR_PASSWORD>);
 . logout();
 . keepAlive();
+. sessionremaining();
 ```
 The Keep alive method extends your Betfair session. Betfair sessions for the UK exchange are currently 4 hours long, so usually just logging in is good enough.
 
