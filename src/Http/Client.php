@@ -4,6 +4,7 @@ namespace PeterColes\Betfair\Http;
 
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 use PeterColes\Betfair\Api\BettingTypes\MarketFilter;
 
 class Client
@@ -131,7 +132,7 @@ class Client
      * @param GuzzleResponse $response
      * @return integer
      */
-    protected function getStatus($response)
+    protected function getStatus(Response $response)
     {
         return (int) $response->getStatusCode();
     }
@@ -142,7 +143,7 @@ class Client
      * @param GuzzleHttp\Response object $response
      * @return array
      */
-    protected function getBody($response)
+    protected function getBody(Response $response)
     {
         return json_decode((string) $response->getBody());
     }
