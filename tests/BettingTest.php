@@ -41,6 +41,33 @@ class BettingTest extends BaseTest
         $this->assertObjectHasAttribute('event', $result[0]);
     }
 
+    public function testListEventsWithTextFilter()
+    {
+        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
+
+        $result = Betfair::betting()->listEvents(['textQuery' => 'England']);
+
+        if (count($result)) {
+            $this->assertTrue(strpos($result[0]->event->name, 'England') !== 0);
+        }
+    }
+
+    public function testListEventsWithEventIdsFilter()
+    {
+        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
+
+        // get some current IDs with which to work
+        $firstResult = Betfair::betting()->listEvents();
+        $eventIds = [$firstResult[0]->event->id, $firstResult[1]->event->id];
+
+        $secondResult = Betfair::betting()->listEvents(['eventIds' => $eventIds]);
+        $secondResultIds = collect($secondResult)->pluck('event.id');
+
+        $this->assertTrue(sizeof($secondResult) == 2);
+        $this->assertContains($eventIds[0], $secondResultIds);
+        $this->assertContains($eventIds[1], $secondResultIds);
+    }
+
     public function testListEventTypes()
     {
         $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
