@@ -31,7 +31,7 @@ class Betting
                 ->setMethod('post')
                 ->setEndPoint(self::ENDPOINT.$method.'/')
                 ->authHeaders()
-                ->addHeaders([ 'Content-Type' => 'application/json' ])
+                ->addHeader([ 'Content-Type' => 'application/json' ])
                 ->setFilter($filters)
                 ->setLocale($locale)
                 ->send();

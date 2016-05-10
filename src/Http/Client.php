@@ -60,9 +60,9 @@ class Client
      * @param array $headers
      * @return Client
      */
-    public function addHeaders(array $headers)
+    public function addHeader(array $header)
     {
-        $this->options[ 'headers' ] = array_merge($this->options[ 'headers' ], $headers);
+        $this->options[ 'headers' ][] = $header;
         return $this;
     }
 
