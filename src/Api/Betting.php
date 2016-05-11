@@ -23,9 +23,25 @@ class Betting
             ->authHeaders()
             ->addHeader([ 'Content-Type' => 'application/json' ])
             ->setFilter($filter)
-            ->setMarketProjection($marketProjection)
+            ->setProjection('marketProjection', $marketProjection)
             ->setSort($sort)
             ->setMaxResults($maxResults)
+            ->setLocale($locale)
+            ->send();
+    }
+
+    public function listMarketBook($marketIds = [], $priceProjection = null, $orderProjection = null, $matchProjection = null, $currencyCode = null, $locale = null)
+    {
+        return $this->httpClient
+            ->setMethod('post')
+            ->setEndPoint(self::ENDPOINT.'listMarketBook/')
+            ->authHeaders()
+            ->addHeader([ 'Content-Type' => 'application/json' ])
+            ->setMarketIds($marketIds)
+            ->setProjection('priceProjection', $priceProjection)
+            ->setProjection('orderProjection', $orderProjection)
+            ->setProjection('matchProjection', $matchProjection)
+            ->setCurrencyCode($currencyCode)
             ->setLocale($locale)
             ->send();
     }

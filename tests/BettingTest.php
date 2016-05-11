@@ -126,4 +126,31 @@ class BettingTest extends BaseTest
             $this->assertObjectHasAttribute('metadata', $result[0]->runners[0]);
         }
     }
+
+    public function testMarketBookWithMarketIdOnly()
+    {
+        $events = collect(Betfair::betting()->listEvents())->sortByDesc('marketCount')->values();
+        $markets = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
+        $result = Betfair::betting()->listMarketBook([$markets[0]->marketId]);
+
+        $this->assertObjectHasAttribute('numberOfRunners', $result[0]);
+        $this->assertObjectHasAttribute('runners', $result[0]);
+    }
+
+    public function testMarketBookWithParameters()
+    {
+        $events = collect(Betfair::betting()->listEvents())->sortByDesc('marketCount')->values();
+        $markets = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
+        $result = Betfair::betting()->listMarketBook(
+            [$markets[0]->marketId],   // $marketIds
+            ['priceData' => ['EX_ALL_OFFERS']], // $priceProjection (end)        
+            'ALL',                     // $orderProjection
+            'NO_ROLLUP',               //$matchProjection
+            'EUR',                     // $currencyCode,
+            'it'                       // $locale
+        );
+
+        $this->assertObjectHasAttribute('lastPriceTraded', $result[0]->runners[0]);
+        $this->assertObjectHasAttribute('ex', $result[0]->runners[0]);
+    }   
 }

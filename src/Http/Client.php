@@ -106,15 +106,27 @@ class Client
     }
 
     /**
+     * Setter for mandatory marketId(s).
+     *
+     * @param  array $marketIds
+     * @return Client
+     */
+    public function setMarketIds($marketIds = null)
+    {
+        $this->options[ 'json' ][ 'marketIds' ] = $marketIds ?: new stdClass;
+        return $this;
+    }
+
+    /**
      * Setter for optional market projection, i.e. what market-related data should be returned.
      *
      * @param  array $marketProjection
      * @return Client
      */
-    public function setMarketProjection($marketProjection = null)
+    public function setProjection($name, $projection = null)
     {
-        if ($marketProjection) {
-            $this->options[ 'json' ][ 'marketProjection' ] = $marketProjection;
+        if ($projection) {
+            $this->options[ 'json' ][ $name ] = $projection;
         }
         return $this;
     }
@@ -157,6 +169,20 @@ class Client
     {
         if ($locale) {
             $this->options[ 'json' ][ 'locale' ] = $locale;
+        }
+        return $this;
+    }
+
+    /**
+     * Setter for optional currency code.
+     *
+     * @param string|null $currencyCode
+     * @return Client
+     */
+    public function setCurrencyCode($currencyCode)
+    {
+        if ($currencyCode) {
+            $this->options[ 'json' ][ 'currencyCode' ] = $currencyCode;
         }
         return $this;
     }
