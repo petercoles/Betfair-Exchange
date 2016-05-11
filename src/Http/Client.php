@@ -148,7 +148,7 @@ class Client
     /**
      * Setter for mandatory request max results limiter.
      *
-     * @param integer|null $maxResults
+     * @param integer $maxResults
      * @return Client
      */
     public function setMaxresults($maxResults = 100)
@@ -162,7 +162,7 @@ class Client
     /**
      * Setter for optional request locale.
      *
-     * @param string|null $locale
+     * @param string $locale
      * @return Client
      */
     public function setLocale($locale)
@@ -174,9 +174,21 @@ class Client
     }
 
     /**
+     * Setter for mandatory time granularity.
+     *
+     * @param string $timeGranularity
+     * @return Client
+     */
+    public function setTimeGranularity($granularity)
+    {
+        $this->options[ 'json' ][ 'granularity' ] = $granularity;
+        return $this;
+    }
+
+    /**
      * Setter for optional currency code.
      *
-     * @param string|null $currencyCode
+     * @param string $currencyCode
      * @return Client
      */
     public function setCurrencyCode($currencyCode)

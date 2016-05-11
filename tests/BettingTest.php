@@ -177,4 +177,30 @@ class BettingTest extends BaseTest
         // even if it simply returns an empty array as the result
         $this->addToAssertionCount(1);
     }
+
+    public function testListTimeRangesByDay()
+    {
+        $result = Betfair::betting()->listTimeRanges([ 'textQuery' => 'England' ], 'DAYS');
+        $day = 24 * 60 * 60;
+        $this->assertObjectHasAttribute('timeRange', $result[0]);
+        $this->assertEquals($day, strtotime($result[0]->timeRange->to) - strtotime($result[0]->timeRange->from));
+    }
+
+    public function testListTimeRangesByHour()
+    {
+        $result = Betfair::betting()->listTimeRanges([ 'textQuery' => 'England' ], 'HOURS');
+        $hour = 60 * 60;
+
+        $this->assertObjectHasAttribute('timeRange', $result[0]);
+        $this->assertEquals($hour, strtotime($result[0]->timeRange->to) - strtotime($result[0]->timeRange->from));
+    }
+
+    public function testListTimeRangesByMinute()
+    {
+        $result = Betfair::betting()->listTimeRanges([ 'textQuery' => 'England' ], 'MINUTES');
+        $minute = 60;
+
+        $this->assertObjectHasAttribute('timeRange', $result[0]);
+        $this->assertEquals($minute, strtotime($result[0]->timeRange->to) - strtotime($result[0]->timeRange->from));
+    }
 }

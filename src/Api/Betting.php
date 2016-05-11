@@ -60,6 +60,18 @@ class Betting
             ->send();
     }
 
+    public function listTimeRanges($marketFilter, $timeGranularity)
+    {
+        return $this->httpClient
+            ->setMethod('post')
+            ->setEndPoint(self::ENDPOINT.'listTimeRanges/')
+            ->authHeaders()
+            ->addHeader([ 'Content-Type' => 'application/json' ])
+            ->setFilter($marketFilter)
+            ->setTimeGranularity($timeGranularity)
+            ->send();
+    }
+
     /**
      * Six Exchange methods have an identical API, so we bundle them into a single magic call e.g.
      * @method listCompetitions(array $filters, string $locale)
