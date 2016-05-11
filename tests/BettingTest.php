@@ -158,7 +158,7 @@ class BettingTest extends BaseTest
     {
         $events = collect(Betfair::betting()->listEvents())->sortByDesc('marketCount')->values();
         $markets = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
-        $result = Betfair::betting()->listMarketProfitAndLoss($marketIds = [ $markets[0]->marketId ]);
+        $result = Betfair::betting()->listMarketProfitAndLoss([ $markets[0]->marketId ]);
 
         // to test this properly would require actual bets to be placed
         // for the moment we'll ensure that the request doesn't fail
@@ -170,7 +170,7 @@ class BettingTest extends BaseTest
     {
         $events = collect(Betfair::betting()->listEvents())->sortByDesc('marketCount')->values();
         $markets = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
-        $result = Betfair::betting()->listMarketProfitAndLoss($marketIds = [ $markets[0]->marketId ], true, true, true);
+        $result = Betfair::betting()->listMarketProfitAndLoss([ $markets[0]->marketId ], true, true, true);
 
         // to test this properly would require actual bets to be placed
         // for the moment we'll ensure that the request doesn't fail
