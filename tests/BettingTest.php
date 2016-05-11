@@ -88,4 +88,42 @@ class BettingTest extends BaseTest
         $this->assertTrue(is_array($result));
         $this->assertObjectHasAttribute('venue', $result[0]);
     }
+
+    public function testListMarketCatalogueFilterByEventIdOnly()
+    {
+        // get an event that we can work with
+        $events = collect(Betfair::betting()->listEvents())->sortByDesc('marketCount')->values();
+
+        if (count($events) > 0 && $events[0]->marketCount > 0) {
+            $result = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
+
+            $this->assertEquals($events[0]->marketCount, count($result));
+            $this->assertObjectHasAttribute('marketId', $result[0]);
+            $this->assertObjectHasAttribute('marketName', $result[0]);
+        }
+    }
+
+    public function testListMarketCatalogueWithParams()
+    {
+        // get an event that we can work with
+        $events = collect(Betfair::betting()->listEvents())->sortByDesc('marketCount')->values();
+
+        if (count($events) > 0 && $events[0]->marketCount > 0) {
+            $eventId = $events[0]->event->id;
+            $marketProjection = [ 'COMPETITION', 'EVENT', 'EVENT_TYPE', 'MARKET_START_TIME', 'MARKET_DESCRIPTION', 'RUNNER_DESCRIPTION', 'RUNNER_METADATA' ];
+            $sort = 'MAXIMUM_TRADED';
+            $maxResults = 2;
+            $locale = 'it';
+            $result = Betfair::betting()->listMarketCatalogue(['eventIds' => [$eventId]], $marketProjection, $sort, $maxResults, $locale);
+
+            $this->assertEquals(2, count($result));
+            $this->assertObjectHasAttribute('marketStartTime', $result[0]);
+            $this->assertObjectHasAttribute('description', $result[0]);
+            $this->assertObjectHasAttribute('competition', $result[0]);
+            $this->assertObjectHasAttribute('eventType', $result[0]);
+            $this->assertObjectHasAttribute('event', $result[0]);
+            $this->assertObjectHasAttribute('runners', $result[0]);
+            $this->assertObjectHasAttribute('metadata', $result[0]->runners[0]);
+        }
+    }
 }

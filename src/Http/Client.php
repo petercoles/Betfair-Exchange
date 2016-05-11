@@ -94,24 +94,67 @@ class Client
     }
 
     /**
-     * Setter for request filter(s).
+     * Setter for request filter(s). mandatory, but can be empty
      *
      * @param  array|null $filter
      * @return Client
      */
-    public function setFilter($filter = null) {
-        $this->options[ 'json' ][ 'filter' ] = $filter?: new stdClass;
+    public function setFilter($filter = null)
+    {
+        $this->options[ 'json' ][ 'filter' ] = $filter ?: new stdClass;
         return $this;
     }
 
     /**
-     * Setter for request locale.
-     * It's optional, so we only pass a value if there is one
+     * Setter for optional market projection, i.e. what market-related data should be returned.
+     *
+     * @param  array|null $marketProjection
+     * @return Client
+     */
+    public function setMarketProjection($marketProjection = null)
+    {
+        if ($marketProjection) {
+            $this->options[ 'json' ][ 'marketProjection' ] = $marketProjection;
+        }
+        return $this;
+    }
+
+    /**
+     * Setter for optional request sort.
      *
      * @param string|null $locale
      * @return Client
      */
-    public function setLocale($locale) {
+    public function setSort($sort)
+    {
+        if ($sort) {
+            $this->options[ 'json' ][ 'sort' ] = $sort;
+        }
+        return $this;
+    }
+
+    /**
+     * Setter for mandatory request max results limiter.
+     *
+     * @param integer|null $maxResults
+     * @return Client
+     */
+    public function setMaxresults($maxResults = 100)
+    {
+        if ($maxResults) {
+            $this->options[ 'json' ][ 'maxResults' ] = $maxResults;
+        }
+        return $this;
+    }
+
+    /**
+     * Setter for optional request locale.
+     *
+     * @param string|null $locale
+     * @return Client
+     */
+    public function setLocale($locale)
+    {
         if ($locale) {
             $this->options[ 'json' ][ 'locale' ] = $locale;
         }

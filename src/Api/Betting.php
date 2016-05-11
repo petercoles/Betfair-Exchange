@@ -15,6 +15,21 @@ class Betting
         $this->httpClient = $httpClient ?: new HttpClient;
     }
 
+    public function listMarketcatalogue($filter = [], $marketProjection = [], $sort = null, $maxResults = 100, $locale = null)
+    {
+        return $this->httpClient
+            ->setMethod('post')
+            ->setEndPoint(self::ENDPOINT.'listMarketCatalogue/')
+            ->authHeaders()
+            ->addHeader([ 'Content-Type' => 'application/json' ])
+            ->setFilter($filter)
+            ->setMarketProjection($marketProjection)
+            ->setSort($sort)
+            ->setMaxResults($maxResults)
+            ->setLocale($locale)
+            ->send();
+    }
+
     /**
      * Six Exchange methods have an identical API, so we bundle them into a single magic call e.g.
      * @method listCompetitions(array $filters, string $locale)
@@ -24,7 +39,7 @@ class Betting
     {
         if (in_array($method, [ 'listCompetitions', 'listCountries', 'listEvents', 'listEventTypes', 'listMarketTypes', 'listVenues' ])) {
 
-            $filters = isset($params[ 0 ]) ? $params[ 0 ] : [ ];
+            $filter = isset($params[ 0 ]) ? $params[ 0 ] : [ ];
             $locale = isset($params[ 1 ]) ? $params[ 1 ] : [ ];
 
             return $this->httpClient
@@ -32,7 +47,7 @@ class Betting
                 ->setEndPoint(self::ENDPOINT.$method.'/')
                 ->authHeaders()
                 ->addHeader([ 'Content-Type' => 'application/json' ])
-                ->setFilter($filters)
+                ->setFilter($filter)
                 ->setLocale($locale)
                 ->send();
         }
