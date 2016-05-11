@@ -57,12 +57,12 @@ class Client
     /**
      * Setter for request headers.
      *
-     * @param array $headers
+     * @param array $header
      * @return Client
      */
     public function addHeader(array $header)
     {
-        $this->options[ 'headers' ][] = $header;
+        $this->options[ 'headers' ][ ] = $header;
         return $this;
     }
 
@@ -96,7 +96,7 @@ class Client
     /**
      * Setter for request filter(s). mandatory, but can be empty
      *
-     * @param  array|null $filter
+     * @param  array $filter
      * @return Client
      */
     public function setFilter($filter = null)
@@ -108,7 +108,7 @@ class Client
     /**
      * Setter for optional market projection, i.e. what market-related data should be returned.
      *
-     * @param  array|null $marketProjection
+     * @param  array $marketProjection
      * @return Client
      */
     public function setMarketProjection($marketProjection = null)
@@ -122,7 +122,7 @@ class Client
     /**
      * Setter for optional request sort.
      *
-     * @param string|null $locale
+     * @param string $sort
      * @return Client
      */
     public function setSort($sort)
