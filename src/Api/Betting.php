@@ -15,7 +15,7 @@ class Betting
         $this->httpClient = $httpClient ?: new HttpClient;
     }
 
-    public function listMarketcatalogue($filter = [], $marketProjection = [], $sort = null, $maxResults = 100, $locale = null)
+    public function listMarketcatalogue($filter = [ ], $marketProjection = [ ], $sort = null, $maxResults = 100, $locale = null)
     {
         return $this->httpClient
             ->setMethod('post')
