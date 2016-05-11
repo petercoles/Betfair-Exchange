@@ -44,7 +44,7 @@ class AuthTest extends BaseTest
 
     public function testKeepAliveUpdateLastLoginTimestamp()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
+        Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
         $firstSessionToken = Auth::$sessionToken;
         $firstLastLogin = Auth::$lastLogin;
@@ -60,7 +60,7 @@ class AuthTest extends BaseTest
 
     public function testLogoutClearsLocalAuthData()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
+        Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
         Betfair::auth()->logout();
 
@@ -71,7 +71,7 @@ class AuthTest extends BaseTest
 
     public function testNoBetfairSessionAfterLogout()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
+        Betfair::auth()->init($this->appKey, $this->username, $this->password);
 
         Betfair::auth()->logout();
 

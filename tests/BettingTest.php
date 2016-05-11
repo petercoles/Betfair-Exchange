@@ -6,6 +6,13 @@ use PeterColes\Betfair\Betfair;
 
 class BettingTest extends BaseTest
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        Betfair::auth()->init($this->appKey, $this->username, $this->password);
+    }
+
     public function testInstantiation()
     {
         $this->assertInstanceOf('PeterColes\Betfair\Api\Betting', Betfair::betting());
@@ -13,8 +20,6 @@ class BettingTest extends BaseTest
 
     public function testListCompetitions()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
-
         $result = Betfair::betting()->listCompetitions();
 
         $this->assertTrue(is_array($result));
@@ -23,8 +28,6 @@ class BettingTest extends BaseTest
 
     public function testListCountries()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
-
         $result = Betfair::betting()->listCountries();
 
         $this->assertTrue(is_array($result));
@@ -33,8 +36,6 @@ class BettingTest extends BaseTest
 
     public function testListEvents()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
-
         $result = Betfair::betting()->listEvents();
 
         $this->assertTrue(is_array($result));
@@ -43,8 +44,6 @@ class BettingTest extends BaseTest
 
     public function testListEventsWithTextFilter()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
-
         $result = Betfair::betting()->listEvents(['textQuery' => 'England']);
 
         if (count($result)) {
@@ -54,8 +53,6 @@ class BettingTest extends BaseTest
 
     public function testListEventsWithEventIdsFilter()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
-
         // get some current IDs with which to work
         $firstResult = Betfair::betting()->listEvents();
         $eventIds = [$firstResult[0]->event->id, $firstResult[1]->event->id];
@@ -70,8 +67,6 @@ class BettingTest extends BaseTest
 
     public function testListEventTypes()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
-
         $result = Betfair::betting()->listEventTypes();
 
         $this->assertTrue(is_array($result));
@@ -80,8 +75,6 @@ class BettingTest extends BaseTest
 
     public function testListMarketTypes()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
-
         $result = Betfair::betting()->listMarketTypes();
 
         $this->assertTrue(is_array($result));
@@ -90,8 +83,6 @@ class BettingTest extends BaseTest
 
     public function testListVenues()
     {
-        $token = Betfair::auth()->init($this->appKey, $this->username, $this->password);
-
         $result = Betfair::betting()->listVenues();
 
         $this->assertTrue(is_array($result));
