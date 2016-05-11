@@ -188,6 +188,20 @@ class Client
     }
 
     /**
+     * Setter for optional flag.
+     *
+     * @param boolean $flag
+     * @return Client
+     */
+    public function setFlag($flag)
+    {
+        if ($flag) {
+            $this->options[ 'json' ][ 'flag' ] = true;
+        }
+        return $this;
+    }
+
+    /**
      * Dispatch the request and provide hooks for error handling for the response.
      *
      * @return object stdClass

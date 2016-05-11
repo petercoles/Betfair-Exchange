@@ -127,7 +127,7 @@ class BettingTest extends BaseTest
         }
     }
 
-    public function testMarketBookWithMarketIdOnly()
+    public function testListMarketBookWithMarketIdOnly()
     {
         $events = collect(Betfair::betting()->listEvents())->sortByDesc('marketCount')->values();
         $markets = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
@@ -137,7 +137,7 @@ class BettingTest extends BaseTest
         $this->assertObjectHasAttribute('runners', $result[0]);
     }
 
-    public function testMarketBookWithParameters()
+    public function testListMarketBookWithParameters()
     {
         $events = collect(Betfair::betting()->listEvents())->sortByDesc('marketCount')->values();
         $markets = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
@@ -152,5 +152,29 @@ class BettingTest extends BaseTest
 
         $this->assertObjectHasAttribute('lastPriceTraded', $result[0]->runners[0]);
         $this->assertObjectHasAttribute('ex', $result[0]->runners[0]);
-    }   
+    }  
+
+    public function testListMarketProfitAndLossWithMarketIdOnly()
+    {
+        $events = collect(Betfair::betting()->listEvents())->sortByDesc('marketCount')->values();
+        $markets = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
+        $result = Betfair::betting()->listMarketProfitAndLoss($marketIds = [ $markets[0]->marketId ]);
+
+        // to test this properly would require actual bets to be placed
+        // for the moment we'll ensure that the request doesn't fail
+        // even if it simply returns an empty array as the result
+        $this->addToAssertionCount(1);
+    }
+
+    public function testListMarketProfitAndLossWithParameters()
+    {
+        $events = collect(Betfair::betting()->listEvents())->sortByDesc('marketCount')->values();
+        $markets = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
+        $result = Betfair::betting()->listMarketProfitAndLoss($marketIds = [ $markets[0]->marketId ], true, true, true);
+
+        // to test this properly would require actual bets to be placed
+        // for the moment we'll ensure that the request doesn't fail
+        // even if it simply returns an empty array as the result
+        $this->addToAssertionCount(1);
+    }
 }

@@ -30,7 +30,7 @@ class Betting
             ->send();
     }
 
-    public function listMarketBook($marketIds = [], $priceProjection = null, $orderProjection = null, $matchProjection = null, $currencyCode = null, $locale = null)
+    public function listMarketBook($marketIds = [ ], $priceProjection = null, $orderProjection = null, $matchProjection = null, $currencyCode = null, $locale = null)
     {
         return $this->httpClient
             ->setMethod('post')
@@ -43,6 +43,20 @@ class Betting
             ->setProjection('matchProjection', $matchProjection)
             ->setCurrencyCode($currencyCode)
             ->setLocale($locale)
+            ->send();
+    }
+
+    public function listMarketProfitAndLoss($marketIds = [ ], $includeSettledBets = false, $includeBspBets = false, $netOfCommission = false)
+    {
+        return $this->httpClient
+            ->setMethod('post')
+            ->setEndPoint(self::ENDPOINT.'listMarketProfitAndLoss/')
+            ->authHeaders()
+            ->addHeader([ 'Content-Type' => 'application/json' ])
+            ->setMarketIds($marketIds)
+            ->setFlag('includeSettledBets', $includeSettledBets)
+            ->setFlag('includeBspBets', $includeBspBets)
+            ->setFlag('netOfCommission', $netOfCommission)
             ->send();
     }
 
