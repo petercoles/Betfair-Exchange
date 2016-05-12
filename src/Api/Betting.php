@@ -48,7 +48,7 @@ class Betting extends BaseApi
     /**
      * Ensure that a maxRecord parameter is passed where mandatory
      */
-    protected maxRecords()
+    protected function maxRecords()
     {
         if ($this->method == 'listMarketCatalogue' && empty($this->params[ 'maxResults' ])) {
             $this->params[ 'maxResults' ] = 1000;
