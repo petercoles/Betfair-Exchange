@@ -160,10 +160,9 @@ class BettingTest extends BaseTest
         $markets = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
         $result = Betfair::betting()->listMarketProfitAndLoss([ $markets[0]->marketId ]);
 
-        // to test this properly would require actual bets to be placed
-        // for the moment we'll ensure that the request doesn't fail
-        // even if it simply returns an empty array as the result
-        $this->addToAssertionCount(1);
+        // to test this fully would require actual bets to be placed by the account being used for testing
+        // but we can test that we connect and get back the right type of object
+        $this->assertObjectHasAttribute('profitAndLosses', $result[0]);
     }
 
     public function testListMarketProfitAndLossWithParameters()
@@ -172,10 +171,8 @@ class BettingTest extends BaseTest
         $markets = Betfair::betting()->listMarketCatalogue(['eventIds' => [$events[0]->event->id]]);
         $result = Betfair::betting()->listMarketProfitAndLoss([ $markets[0]->marketId ], true, true, true);
 
-        // to test this properly would require actual bets to be placed
-        // for the moment we'll ensure that the request doesn't fail
-        // even if it simply returns an empty array as the result
-        $this->addToAssertionCount(1);
+        // the parameters will cause this extra attribute to be included, even in an "empty" response object 
+        $this->assertObjectHasAttribute('commissionApplied', $result[0]);
     }
 
     public function testListTimeRangesByDay()
