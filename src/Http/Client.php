@@ -106,14 +106,32 @@ class Client
     }
 
     /**
-     * Setter for mandatory marketId(s).
+     * Setter for marketId(s).
+     * This param is sometime mandatory, but othertimes breaks the API if an empty value is provided
      *
      * @param  array $marketIds
+     * @param  boolean $mandatory
      * @return Client
      */
-    public function setMarketIds($marketIds = null)
+    public function setMarketIds($marketIds = null, $mandatory = false)
     {
-        $this->options[ 'json' ][ 'marketIds' ] = $marketIds ?: new stdClass;
+        if ($marketIds || $mandatory) {
+            $this->options[ 'json' ][ 'marketIds' ] = $marketIds ?: new stdClass;
+        }
+        return $this;
+    }
+
+    /**
+     * Setter for optional betId(s).
+     *
+     * @param  array $betIds
+     * @return Client
+     */
+    public function setBetIds($betIds = null)
+    {
+        if ($betIds) {
+            $this->options[ 'json' ][ 'betIds' ] = $betIds ?: new stdClass;
+        }
         return $this;
     }
 
@@ -203,7 +221,7 @@ class Client
     /**
      * Setter for optional flag.
      *
-     * @param boolean $name
+     * @param string $name
      * @param boolean $flag
      * @return Client
      */
@@ -212,6 +230,60 @@ class Client
         if ($flag) {
             $this->options[ 'json' ][ $name ] = true;
         }
+        return $this;
+    }
+
+    /**
+     * Setter for date range.
+     *
+     * @param string $name
+     * @param array $range
+     * @return Client
+     */
+    public function setDateRange($name, $range)
+    {
+        if ($range) {
+            $this->options[ 'json' ][ $name ] = $range;
+        }
+        return $this;
+    }
+
+    /**
+     * Setter for sort order.
+     *
+     * @param string $by
+     * @param string $direction
+     * @return Client
+     */
+    public function setOrder($by, $direction = null)
+    {
+        if ($by) {
+            $this->options[ 'json' ][ 'orderBy' ] = $by;
+
+            if ($direction) {
+                $this->options[ 'json' ][ 'sortDir' ] = $direction;
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Setter for record range.
+     *
+     * @param string $from
+     * @param string $count
+     * @return Client
+     */
+    public function setRecordRange($from = null, $count = null)
+    {
+        if ($from) {
+            $this->options[ 'json' ][ 'fromRecord' ] = $from;
+        }
+
+        if ($count) {
+            $this->options[ 'json' ][ 'recordCount' ] = $count;
+        }
+
         return $this;
     }
 

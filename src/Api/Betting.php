@@ -37,7 +37,7 @@ class Betting
             ->setEndPoint(self::ENDPOINT.'listMarketBook/')
             ->authHeaders()
             ->addHeader([ 'Content-Type' => 'application/json' ])
-            ->setMarketIds($marketIds)
+            ->setMarketIds($marketIds, true)
             ->setProjection('priceProjection', $priceProjection)
             ->setProjection('orderProjection', $orderProjection)
             ->setProjection('matchProjection', $matchProjection)
@@ -53,7 +53,7 @@ class Betting
             ->setEndPoint(self::ENDPOINT.'listMarketProfitAndLoss/')
             ->authHeaders()
             ->addHeader([ 'Content-Type' => 'application/json' ])
-            ->setMarketIds($marketIds)
+            ->setMarketIds($marketIds, true)
             ->setFlag('includeSettledBets', $includeSettledBets)
             ->setFlag('includeBspBets', $includeBspBets)
             ->setFlag('netOfCommission', $netOfCommission)
@@ -69,6 +69,23 @@ class Betting
             ->addHeader([ 'Content-Type' => 'application/json' ])
             ->setFilter($marketFilter)
             ->setTimeGranularity($timeGranularity)
+            ->send();
+    }
+
+    public function listCurrentOrders($betIds = null, $marketIds = null, $orderProjection = null, $placedDateRange = null, $dateRange = null, $orderBy = null, $sortDir = null, $fromRecord = null, $recordCount = null)
+    {
+        return $this->httpClient
+            ->setMethod('post')
+            ->setEndPoint(self::ENDPOINT.'listCurrentOrders/')
+            ->authHeaders()
+            ->addHeader([ 'Content-Type' => 'application/json' ])
+            ->setBetIds($betIds)
+            ->setMarketIds($marketIds)
+            ->setProjection('orderProjection' , $orderProjection)
+            ->setDateRange('placedDateRange', $placedDateRange)
+            ->setDateRange('dateRange', $dateRange)
+            ->setOrder($orderBy, $sortDir)
+            ->setRecordRange($fromRecord, $recordCount)
             ->send();
     }
 

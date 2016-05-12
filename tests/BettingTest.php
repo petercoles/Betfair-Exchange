@@ -199,4 +199,11 @@ class BettingTest extends BaseTest
         $this->assertObjectHasAttribute('timeRange', $result[0]);
         $this->assertEquals($minute, strtotime($result[0]->timeRange->to) - strtotime($result[0]->timeRange->from));
     }
+
+    public function testListCurrentOrdersWithNoParams()
+    {
+        $result = Betfair::betting()->listCurrentOrders();
+
+        $this->assertObjectHasAttribute('currentOrders', $result);
+    }
 }
