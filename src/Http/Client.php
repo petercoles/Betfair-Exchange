@@ -3,7 +3,7 @@
 namespace PeterColes\Betfair\Http;
 
 use Exception;
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Response;
 use PeterColes\Betfair\Api\Auth;
 use stdClass;
@@ -21,11 +21,11 @@ class Client
     /**
      * instantiate Guzzle client (unless one is injected).
      *
-     * @param GuzzleClient $client
+     * @param GuzzleClient $httpClient
      */
-    public function __construct($client = null)
+    public function __construct($httpClient = null)
     {
-        $this->guzzleClient = $client ?: new Client;
+        $this->guzzleClient = $httpClient ?: new GuzzleClient;
         $this->options[ 'headers' ] = [ 'Accept' => 'application/json' ];
     }
 
