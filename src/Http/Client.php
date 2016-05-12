@@ -120,6 +120,7 @@ class Client
     /**
      * Setter for optional market projection, i.e. what market-related data should be returned.
      *
+     * @param  string $name
      * @param  array $marketProjection
      * @return Client
      */
@@ -176,7 +177,7 @@ class Client
     /**
      * Setter for mandatory time granularity.
      *
-     * @param string $timeGranularity
+     * @param string $granularity
      * @return Client
      */
     public function setTimeGranularity($granularity)
@@ -202,6 +203,7 @@ class Client
     /**
      * Setter for optional flag.
      *
+     * @param boolean $name
      * @param boolean $flag
      * @return Client
      */
@@ -251,7 +253,7 @@ class Client
     /**
      * Get http response body, cast to json and decode.
      *
-     * @param Response object $response
+     * @param Response $response
      * @return array
      */
     protected function getBody(Response $response)
