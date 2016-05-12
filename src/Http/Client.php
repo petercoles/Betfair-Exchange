@@ -310,8 +310,6 @@ class Client
     {
         $response = $this->guzzleClient->request($this->method, $this->uri, $this->options);
 
-        $status = $this->getStatus($response);
-
         $body = $this->getBody($response);
 
         if (is_object($body) && isset($body->status) && $body->status != 'SUCCESS') {
