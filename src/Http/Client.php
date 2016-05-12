@@ -4,7 +4,7 @@ namespace PeterColes\Betfair\Http;
 
 use Exception;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 use PeterColes\Betfair\Api\Auth;
 use stdClass;
 
@@ -313,23 +313,12 @@ class Client
     }
 
     /**
-     * Get status code from http response.
-     *
-     * @param Response $response
-     * @return integer
-     */
-    protected function getStatus(Response $response)
-    {
-        return (int) $response->getStatusCode();
-    }
-
-    /**
      * Get http response body, cast to json and decode.
      *
-     * @param Response $response
+     * @param ResponseInterface $response
      * @return array
      */
-    protected function getBody(Response $response)
+    protected function getBody(ResponseInterface $response)
     {
         return json_decode((string) $response->getBody());
     }
