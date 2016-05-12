@@ -25,4 +25,20 @@ class AccountTest extends BaseTest
         $this->assertObjectHasAttribute('firstName', $result);
         $this->assertObjectHasAttribute('pointsBalance', $result);
     }
+
+    public function testGetDefaultAccountFunds()
+    {
+        $result = Betfair::account()->getAccountFunds();
+
+        $this->assertObjectHasAttribute('availableToBetBalance', $result);
+        $this->assertEquals('UK', $result->wallet);
+    }
+
+    public function testGetAustralianAccountFunds()
+    {
+        $result = Betfair::account()->getAccountFunds('AUSTRALIAN');
+
+        $this->assertObjectHasAttribute('availableToBetBalance', $result);
+        $this->assertEquals('AUSTRALIAN', $result->wallet);
+    }
 }

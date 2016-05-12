@@ -288,6 +288,20 @@ class Client
     }
 
     /**
+     * Setter for optional wallet.
+     *
+     * @param string $wallet
+     * @return Client
+     */
+    public function setwallet($wallet)
+    {
+        if ($wallet) {
+            $this->options[ 'json' ][ 'wallet' ] = $wallet;
+        }
+        return $this;
+    }
+
+    /**
      * Dispatch the request and provide hooks for error handling for the response.
      *
      * @return object stdClass

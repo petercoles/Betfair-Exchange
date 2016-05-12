@@ -18,10 +18,19 @@ class Account
     public function getAccountDetails()
     {
         return $this->httpClient
-            // ->setMethod('post')
             ->setEndPoint(self::ENDPOINT.'getAccountDetails/')
             ->authHeaders()
-            // ->addHeader([ 'Content-Type' => 'application/json' ])
+            ->send();
+    }
+
+    public function getAccountFunds($wallet = null)
+    {
+        return $this->httpClient
+            ->setMethod('post')
+            ->setEndPoint(self::ENDPOINT.'getAccountFunds/')
+            ->authHeaders()
+            ->addHeader([ 'Content-Type' => 'application/json' ])
+            ->setWallet($wallet)
             ->send();
     }
 }
