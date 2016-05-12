@@ -41,7 +41,7 @@ class Betting extends BaseApi
         ];
 
         if (in_array($this->method, $lists) && empty($this->params[ 'filter' ])) {
-            $this->params['filter'] = new \stdClass;
+            $this->params[ 'filter' ] = new \stdClass;
         }
     }
 
