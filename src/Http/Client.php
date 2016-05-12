@@ -62,7 +62,7 @@ class Client
      */
     public function addHeader(array $header)
     {
-        $this->options[ 'headers' ][ ] = $header;
+        $this->options[ 'headers' ] += $header;
         return $this;
     }
 
