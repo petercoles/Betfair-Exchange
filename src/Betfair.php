@@ -28,7 +28,7 @@ class Betfair
         // all other subsystems, currently Betting and Account
         $class = 'PeterColes\\Betfair\\Api\\'.ucfirst($method);
         if (class_exists($class)) {
-            return call_user_func([new $class, 'execute'], $params);
+            return call_user_func([ new $class, 'execute' ], $params);
         }
     }
 }
