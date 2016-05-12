@@ -100,7 +100,7 @@ class Client
      */
     public function setParams($params)
     {
-        if ($params) {
+        if (!empty($params)) {
             foreach ($params as $key => $value) {
                 $this->options[ 'json' ][ $key ] = $value;
             }
