@@ -28,7 +28,7 @@ class Betting extends BaseApi
     /**
      * Ensure that a filter parameter is passed where mandatory
      */
-    protected filter()
+    protected function filter()
     {
         $lists = [
             'listCompetitions',
