@@ -150,7 +150,6 @@ class BettingTest extends BaseTest
             'it'                       // $locale
         );
 
-        $this->assertObjectHasAttribute('lastPriceTraded', $result[0]->runners[0]);
         $this->assertObjectHasAttribute('ex', $result[0]->runners[0]);
     }  
 
