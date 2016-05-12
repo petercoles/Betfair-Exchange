@@ -1,18 +1,12 @@
 <?php
 
-namespace PeterColes\Tests;
+namespace PeterColes\Tests\Integration\Betting;
 
 use PeterColes\Betfair\Betfair;
+use PeterColes\Tests\Integration\BaseTest;
 
 class BettingTest extends BaseTest
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        Betfair::auth()->init($this->appKey, $this->username, $this->password);
-    }
-
     public function testInstantiation()
     {
         $this->assertInstanceOf('PeterColes\Betfair\Api\Betting', Betfair::betting());

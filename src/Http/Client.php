@@ -281,15 +281,17 @@ class Client
     }
 
     /**
-     * Setter for optional wallet.
+     * Setter for params.
      *
-     * @param string $wallet
+     * @param string $params
      * @return Client
      */
-    public function setwallet($wallet)
+    public function setParams($params)
     {
-        if ($wallet) {
-            $this->options[ 'json' ][ 'wallet' ] = $wallet;
+        if ($params) {
+            foreach ($params as $key => $value) {
+                $this->options[ 'json' ][ $key ] = $value;
+            }
         }
         return $this;
     }

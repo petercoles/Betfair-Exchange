@@ -1,6 +1,6 @@
 <?php
 
-namespace PeterColes\Tests;
+namespace PeterColes\Tests\Integration;
 
 use PeterColes\Betfair\Betfair;
 
@@ -13,5 +13,7 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
         $this->appKey = getenv('APP_KEY');
         $this->username = getenv('USERNAME');
         $this->password = getenv('PASSWORD');
+
+        Betfair::auth()->init($this->appKey, $this->username, $this->password);
     }
 }

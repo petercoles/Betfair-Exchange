@@ -1,9 +1,10 @@
 <?php
 
-namespace PeterColes\Tests;
+namespace PeterColes\Tests\Integration\Auth;
 
 use PeterColes\Betfair\Api\Auth;
 use PeterColes\Betfair\Betfair;
+use PeterColes\Tests\Integration\BaseTest;
 
 class AuthTest extends BaseTest
 {
