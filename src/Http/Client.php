@@ -205,10 +205,10 @@ class Client
      * @param boolean $flag
      * @return Client
      */
-    public function setFlag($flag)
+    public function setFlag($name, $flag)
     {
         if ($flag) {
-            $this->options[ 'json' ][ 'flag' ] = true;
+            $this->options[ 'json' ][ $name ] = true;
         }
         return $this;
     }
