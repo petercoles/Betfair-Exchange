@@ -228,7 +228,7 @@ class Client
 
         $body = $this->getBody($response);
 
-        if (is_object($body) && $body->status != 'SUCCESS') {
+        if (is_object($body) && isset($body->status) && $body->status != 'SUCCESS') {
             $this->handleApiException($body->error);
         }
 
