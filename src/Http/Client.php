@@ -226,10 +226,6 @@ class Client
 
         $status = $this->getStatus($response);
 
-        if ($status != 200) {
-            $this->handleHttpException($status);
-        }
-
         $body = $this->getBody($response);
 
         if (is_object($body) && $body->status != 'SUCCESS') {
@@ -259,16 +255,6 @@ class Client
     protected function getBody(Response $response)
     {
         return json_decode((string) $response->getBody());
-    }
-
-    /**
-     * Stub for http exception handling.
-     *
-     * @param Integer $status
-     * @return void
-     */
-    protected function handleHttpException($status) {
-        throw new Exception('Http request failure. Http Exception Code: '.$status);
     }
 
     /**
