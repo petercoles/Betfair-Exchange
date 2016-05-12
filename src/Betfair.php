@@ -12,12 +12,12 @@ class Betfair
             return new $class($params[ 0 ], $params[ 1 ], $params[ 2 ]);
         }
 
-        if ($method == 'account') {
-            return call_user_func([new $class, 'execute'], $params);
+        if ($method == 'auth') {
+            return new $class;
         }
 
         if (class_exists($class)) {
-            return new $class;
+            return call_user_func([new $class, 'execute'], $params);
         }
     }
 }

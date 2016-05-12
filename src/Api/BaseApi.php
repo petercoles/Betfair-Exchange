@@ -8,6 +8,8 @@ abstract class BaseApi
 {
     protected $httpClient;
 
+    protected $method;
+
     public function __construct(HttpClient $httpClient = null)
     {
         $this->httpClient = $httpClient ?: new HttpClient;
@@ -15,11 +17,11 @@ abstract class BaseApi
 
     public function execute($params)
     {
-        $method = array_shift($params);
+        $this->method = array_shift($params);
 
         return $this->httpClient
             ->setMethod('post')
-            ->setEndPoint(static::ENDPOINT.$method.'/')
+            ->setEndPoint(static::ENDPOINT.$this->method.'/')
             ->authHeaders()
             ->addHeader([ 'Content-Type' => 'application/json' ])
             ->setParams($this->prepare($params))
