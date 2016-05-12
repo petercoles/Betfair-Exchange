@@ -2,9 +2,9 @@
 
 namespace PeterColes\Betfair\Api;
 
-use PeterColes\Betfair\Http\Client as HttpClient;
+use PeterColes\Betfair\Api\BaseApi;
 
-class Auth
+class Auth extends BaseApi
 {
     const ENDPOINT = 'https://identitysso.betfair.com/api/';
 
@@ -17,11 +17,6 @@ class Auth
     public static $sessionToken = null;
 
     public static $lastLogin = null;
-
-    public function __construct(HttpClient $httpClient = null)
-    {
-        $this->httpClient = $httpClient ?: new HttpClient;
-    }
 
     public function init($appKey, $username, $password)
     {
