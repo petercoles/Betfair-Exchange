@@ -81,7 +81,7 @@ class Betting
             ->addHeader([ 'Content-Type' => 'application/json' ])
             ->setBetIds($betIds)
             ->setMarketIds($marketIds)
-            ->setProjection('orderProjection' , $orderProjection)
+            ->setProjection('orderProjection', $orderProjection)
             ->setDateRange('placedDateRange', $placedDateRange)
             ->setDateRange('dateRange', $dateRange)
             ->setOrder($orderBy, $sortDir)

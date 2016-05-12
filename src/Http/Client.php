@@ -22,7 +22,6 @@ class Client
      * instantiate Guzzle client (unless one is injected).
      *
      * @param GuzzleClient $client
-     * @return void
      */
     public function __construct($client = null)
     {
@@ -139,7 +138,7 @@ class Client
      * Setter for optional market projection, i.e. what market-related data should be returned.
      *
      * @param  string $name
-     * @param  array $marketProjection
+     * @param  array $projection
      * @return Client
      */
     public function setProjection($name, $projection = null)
@@ -339,7 +338,6 @@ class Client
      * Stub for API exception handling.
      *
      * @param String $exception
-     * @return void
      */
     protected function handleApiException($exception) {
         throw new Exception('API request failure. API Exception Message: '.$exception);
