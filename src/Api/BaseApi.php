@@ -18,6 +18,11 @@ abstract class BaseApi
     protected $method;
 
     /**
+     * The parameters that will be passed to the API method being invoked.
+     */
+    protected $params;
+
+    /**
      * Ensure that we have an HTTP client with which to work
      *
      * @param HttpClient $httpClient
@@ -36,13 +41,14 @@ abstract class BaseApi
     public function execute($params)
     {
         $this->method = array_shift($params);
+        $this->prepare($params);
 
         return $this->httpClient
             ->setMethod('post')
             ->setEndPoint(static::ENDPOINT.$this->method.'/')
             ->authHeaders()
             ->addHeader([ 'Content-Type' => 'application/json' ])
-            ->setParams($this->prepare($params))
+            ->setParams($this->params)
             ->send();
     }
 
@@ -55,6 +61,6 @@ abstract class BaseApi
      */
     protected function prepare($params)
     {
-        return !empty($params) ? $params[ 0 ] : null;
+        $this->params = !empty($params) ? $params[ 0 ] : null;
     }
 }

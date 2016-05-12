@@ -18,17 +18,40 @@ class Betting extends BaseApi
      */
     public function prepare($params)
     {
-        $params = !empty($params) ? $params[ 0 ] : [ ];
+        $this->params = !empty($params) ? $params[ 0 ] : [ ];
 
-        $lists = [ 'listCompetitions', 'listCountries', 'listEvents', 'listEventTypes', 'listMarketTypes', 'listVenues', 'listMarketCatalogue' ];
-        if (in_array($this->method, $lists) && empty($params[ 'filter' ])) {
-            $params['filter'] = new \stdClass;
+        // force mandatory fields
+        $this->filter();
+        $this->maxRecords();
+    }
+
+    /**
+     * Ensure that a filter parameter is passed where mandatory
+     */
+    protected filter()
+    {
+        $lists = [
+            'listCompetitions',
+            'listCountries',
+            'listEvents',
+            'listEventTypes',
+            'listMarketTypes',
+            'listVenues',
+            'listMarketCatalogue'
+        ];
+
+        if (in_array($this->method, $lists) && empty($this->params[ 'filter' ])) {
+            $this->params['filter'] = new \stdClass;
         }
+    }
 
-        if ($this->method == 'listMarketCatalogue' && empty($params[ 'maxResults' ])) {
-            $params[ 'maxResults' ] = 1000;
+    /**
+     * Ensure that a maxRecord parameter is passed where mandatory
+     */
+    protected maxRecords()
+    {
+        if ($this->method == 'listMarketCatalogue' && empty($this->params[ 'maxResults' ])) {
+            $this->params[ 'maxResults' ] = 1000;
         }
-
-        return $params;
     }
 }
