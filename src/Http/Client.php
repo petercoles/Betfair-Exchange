@@ -242,7 +242,7 @@ class Client
      */
     public function setDateRange($name, $range)
     {
-        if ($range) {
+        if (!empty($range)) {
             $this->options[ 'json' ][ $name ] = $range;
         }
         return $this;
@@ -260,7 +260,7 @@ class Client
         if ($by) {
             $this->options[ 'json' ][ 'orderBy' ] = $by;
 
-            if ($direction) {
+            if (!empty($direction)) {
                 $this->options[ 'json' ][ 'sortDir' ] = $direction;
             }
         }
@@ -270,20 +270,14 @@ class Client
     /**
      * Setter for record range.
      *
-     * @param string $from
-     * @param string $count
+     * @param int $from
+     * @param int $count
      * @return Client
      */
-    public function setRecordRange($from = null, $count = null)
+    public function setRecordRange($from = 0, $count = 1000)
     {
-        if ($from) {
-            $this->options[ 'json' ][ 'fromRecord' ] = $from;
-        }
-
-        if ($count) {
-            $this->options[ 'json' ][ 'recordCount' ] = $count;
-        }
-
+        $this->options[ 'json' ][ 'fromRecord' ] = $from;
+        $this->options[ 'json' ][ 'recordCount' ] = $count;
         return $this;
     }
 
