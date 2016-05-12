@@ -6,18 +6,38 @@ use PeterColes\Betfair\Api\BaseApi;
 
 class Auth extends BaseApi
 {
+    /**
+     * Betfair API endpoint for authentication requests
+     */
     const ENDPOINT = 'https://identitysso.betfair.com/api/';
 
-    const SESSION_LENGTH = 4 * 60 * 60; // 4 hours
+    /**
+     * 4 hours, expressed in seconds
+     */
+    const SESSION_LENGTH = 4 * 60 * 60;
 
-    protected $httpClient;
-
+    /**
+     * Application key, provided by Betfair on registration
+     */
     public static $appKey = null;
 
+    /**
+     * Session token, provided by Betfair at login
+     */
     public static $sessionToken = null;
 
+    /**
+     * Time of last login, expressed in seconds since the Unix Epoch
+     */
     public static $lastLogin = null;
 
+    /**
+     * Wrapper method for other methods to initiate and manage a Betfair session
+     *
+     * @param  string $appKey
+     * @param  string $username
+     * @param  string $password
+     */
     public function init($appKey, $username, $password)
     {
         if ($appKey == self::$appKey && $this->sessionRemaining() > 5) {
@@ -28,6 +48,14 @@ class Auth extends BaseApi
         }
     }
 
+    /**
+     * Method to directly execute Betfair login request.
+     * For use only when the init() method isn't appropriate
+     *
+     * @param  string $appKey
+     * @param  string $username
+     * @param  string $password
+     */
     public function login($appKey, $username, $password)
     {
         $result = $this->httpClient
@@ -42,6 +70,9 @@ class Auth extends BaseApi
         return $result->token;
     }
 
+    /**
+     * Execute Betfair API call to extend the current session
+     */
     public function keepAlive()
     {
         $this->httpClient
@@ -52,6 +83,10 @@ class Auth extends BaseApi
         self::$lastLogin = time();
     }
 
+    /**
+     * Execute Betfair API call to logout from their system.
+     * Clear all local references to the session.
+     */
     public function logout()
     {
         $this->httpClient
@@ -64,6 +99,9 @@ class Auth extends BaseApi
         self::$lastLogin = null;
     }
 
+    /**
+     * Calculate and provide the time remaining until the current session token expires
+     */
     public function sessionRemaining()
     {
         return self::$lastLogin + self::SESSION_LENGTH - time();
