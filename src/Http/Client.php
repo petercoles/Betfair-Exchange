@@ -95,7 +95,7 @@ class Client
     /**
      * Setter for params.
      *
-     * @param string $params
+     * @param array $params
      * @return Client
      */
     public function setParams($params)
@@ -111,7 +111,7 @@ class Client
     /**
      * Dispatch the request and provide hooks for error handling for the response.
      *
-     * @return object stdClass
+     * @return mixed
      */
     public function send()
     {
