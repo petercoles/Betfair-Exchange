@@ -6,7 +6,6 @@ use Exception;
 use GuzzleHttp\Client as GuzzleClient;
 use Psr\Http\Message\ResponseInterface;
 use PeterColes\Betfair\Api\Auth;
-use stdClass;
 
 class Client
 {
