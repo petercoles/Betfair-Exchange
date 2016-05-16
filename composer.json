@@ -17,7 +17,6 @@
   },
   "require": {
     "php": ">=5.6.0",
-    "illuminate/support": "~5",
     "guzzlehttp/guzzle": "^6.2",
     "tightenco/collect": "^5.2"
   },
