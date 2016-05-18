@@ -7,7 +7,7 @@ use PeterColes\Betfair\Api\Auth;
 class Betfair
 {
     /**
-     * Distribute requests to appropiate subsystems
+     * Distribute requests to appropriate subsystems
      *
      * @param  $method string   the requested method (usually an API call)
      * @param  $params array    any parameters needed by, or to refine, the call

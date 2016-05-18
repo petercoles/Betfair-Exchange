@@ -35,7 +35,7 @@ $sessionToken = Betfair::init(string <app-key>, string <username>, string <passw
 ```
 On a first call it will store your APP_KEY, then login and retrieve a SESSION_TOKEN and finally stire that token. The app key and session token will be used to authenticate all subsequent requests. It's safe, indeed recommended, to call init() before each group of requests. If there's an active session already, it will simply extend this session rather than logging in again.
 
-Four other authentication methods are available, though its unlikely that you'll need to use them
+Four other authentication methods are available, though it's unlikely that you'll need to use them
 ```
 . login(string <app-key>, string <username>, string <password>);
 . logout();
@@ -58,7 +58,7 @@ Betfair::account(string <name-of-method>, array <params-for-method>);
 
 ## Testing
 
-The package comes with two test suite (or at least soon will). The "unit" test suite will simulate http activity (i.e. won't hit the Betfair servers), however the "integration" test suite will test connectivity and the acceptability of requests so will need valud credentials. These should be placed in a file called .env.php which can be created by copying the .env.example.php file in the package's root folder.
+The package comes with two test suite (or at least soon will). The "unit" test suite will simulate http activity (i.e. won't hit the Betfair servers), however the "integration" test suite will test connectivity and the acceptability of requests so will need valid credentials. These should be placed in a file called .env.php which can be created by copying the .env.example.php file in the package's root folder.
 
 To run the test suites:
 ```
