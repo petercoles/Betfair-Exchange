@@ -1,10 +1,14 @@
-Multilingual Country List
-=========================
+Betfair API Wrapper Changlelog
+==============================
 
-## 1.1.0
+## 0.2 More request types and better code
 
-* Remove dependancy on Umpirsky's data. Data is now obtained directly from source and injected into the package to make it smaller and faster.
+Expanding range of supported requests, Betfair::init() alias and much cleaner code under the hood
 
-## 1.0.0
+## 0.1 Better API session handling
 
-Initial stable release
+Removes the need to supply the API key and session token on every request. Credentials are now supplied once through a new Betfair::Auth()->init() method and the session token is managed and refreshed by the package.
+
+## 0.0 Initial Release
+
+Supports manual authentication to Betfair exchange via login, logout and keepAlive API calls and and basic list calls for competitions, countries, events, event types, market types and venues only.
