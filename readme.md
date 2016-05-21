@@ -31,7 +31,7 @@ Each Betfair request starts with a static call to one of the packages subsystems
 
 All requests require to you be logged in to the Betfair Exchange, otherwise it won't talk to you. So your first call will always be:
 ```
-$sessionToken = Betfair::init(string <app-key>, string <username>, string <password>);
+Betfair::init(string <app-key>, string <username>, string <password>);
 ```
 On a first call it will store your APP_KEY, then login and retrieve a SESSION_TOKEN and finally stire that token. The app key and session token will be used to authenticate all subsequent requests. It's safe, indeed recommended, to call init() before each group of requests. If there's an active session already, it will simply extend this session rather than logging in again.
 
