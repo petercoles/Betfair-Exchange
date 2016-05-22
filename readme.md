@@ -35,6 +35,12 @@ Betfair::init(string <app-key>, string <username>, string <password>);
 ```
 On a first call it will store your APP_KEY, then login and retrieve a SESSION_TOKEN and finally stire that token. The app key and session token will be used to authenticate all subsequent requests. It's safe, indeed recommended, to call init() before each group of requests. If there's an active session already, it will simply extend this session rather than logging in again.
 
+Authentication information will only exist for the current request (i.e. web page or CLI command) has completed, but will be available for as many Betfair accesses as you attempt within that request. To share the the authentication credentials across requests, e.g. avoid the need to login on each page load, the package offers the following option:
+```
+Betfair::persist(string <app-key>, string <session-token>);
+```
+This assumes that you are storing the credentials in a PHP session, a cache or a database, indeed anywhere were they can be accessed by a request and passed as parameters to this method. It will ensure that they are available to be appended to each Betfair API call. The normal flow will be a single call to Betfair::init(), obtain the session key from PeterColes\Betfair\Api\Auth::$sessionToken, and then a call to Betfair::persist() for all subsequent requests.
+
 Four other authentication methods are available, though it's unlikely that you'll need to use them
 ```
 . login(string <app-key>, string <username>, string <password>);
@@ -42,7 +48,7 @@ Four other authentication methods are available, though it's unlikely that you'l
 . keepAlive();
 . sessionremaining();
 ```
-If you're manually managing your sessions (why?), use the keep alive method to extend your Betfair session. Betfair sessions for the UK exchange are currently 4 hours long.
+If you're manually managing your sessions, you could use the keep alive method to extend your Betfair session, though the persist method described above is usually a better soltion. Betfair sessions for the UK exchange are currently 4 hours long.
 
 Betting information can be obtained from the betting subsystem. All calls have the same structure:
 ```

@@ -49,6 +49,19 @@ class Auth extends BaseApi
     }
 
     /**
+     * Accept app key and session token and extend session
+     *
+     * @param  string $appKey
+     * @param  string $sessionToken
+     */
+    public function persist($appKey, $sessionToken)
+    {
+        self::$appKey = $appKey;
+        self::$sessionToken = $sessionToken;
+        $this->keepAlive();
+    }
+
+    /**
      * Method to directly execute Betfair login request.
      * For use only when the init() method isn't appropriate
      *

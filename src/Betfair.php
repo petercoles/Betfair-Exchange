@@ -15,11 +15,11 @@ class Betfair
      */
     public static function __callStatic($method, $params)
     {
-        // alias for Auth's init method
-        if ($method == 'init') {
-            return call_user_func_array([ new Auth, 'init' ], $params);
-        } 
-        
+        // alias for Auth's init and persist methods
+        if ($method == 'init' || $method == 'persist') {
+            return call_user_func_array([ new Auth, $method ], $params);
+        }
+
         // standard Auth
         if ($method == 'auth') {
             return new Auth;
