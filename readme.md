@@ -7,9 +7,9 @@
 
 ## Introduction
 
-*This is a pre-alpha package* designed to provide a simple interface to the Betfair Exchange API. It's not yet suitable for production use and its API will change (guaranteed).
+*This is a simple wrapper to the Betfair Exchange API. It's main role is to simplify the initiation and maintenance of Betfair sessions. It requires that you understand the requests that the Betfair API accepts and the parameters that each uses. These can be found on the [Betfair Developer Site](http://docs.developer.betfair.com/docs). These can be a bit daunting at first, but when used for while, the underlying structure becomes clear.
 
-If you're looking for something usable now, try [Daniel D'Angeli's full blooded package](https://github.com/danieledangeli/betfair-php) or [Dan Cotora's very lightweight wrapper](https://github.com/dcro/simple-betfair-php-api).
+If this isn't to your taste, then you might like to consider [Daniel D'Angeli's full blooded package](https://github.com/danieledangeli/betfair-php) or [Dan Cotora's very lightweight wrapper](https://github.com/dcro/simple-betfair-php-api).
 
 
 ## Installation
@@ -64,15 +64,15 @@ Betfair::account(string <name-of-method>, array <params-for-method>);
 
 ## Testing
 
-The package comes with two test suite (or at least soon will). The "unit" test suite will simulate http activity (i.e. won't hit the Betfair servers), however the "integration" test suite will test connectivity and the acceptability of requests so will need valid credentials. These should be placed in a file called .env.php which can be created by copying the .env.example.php file in the package's root folder.
+The package comes with two test suites (or at least soon will). The "unit" test suite (when written) simulate http activity (i.e. won't hit the Betfair servers), however the "integration" test suite will test connectivity and the acceptability of requests so will need valid credentials. These should be placed in a file called .env.php which can be created by copying the .env.example.php file in the package's root folder.
 
 To run the test suites:
 ```
-phpunit --testsuite=unit
+phpunit --testsuite=unit (coming soon)
 phpunit --testsuite=integration
 ```
 
-It's recommended that you only run the tests via the test suites, as some tests are deliberately excluded to avoid unintended placement of orders or moving funds around.
+It's recommended that you only run the tests via the test suites, as some tests are deliberately excluded to avoid unintended placement of orders or movement of funds.
 
 ## Issues
 
