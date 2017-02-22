@@ -14,6 +14,6 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
         $this->username = getenv('USERNAME');
         $this->password = getenv('PASSWORD');
 
-        Betfair::auth()->init($this->appKey, $this->username, $this->password);
+        Betfair::init($this->appKey, $this->username, $this->password);
     }
 }

@@ -33,8 +33,8 @@ class SimpleListsTest extends BaseTest
 
     public function testListEventsWithTextFilter()
     {
-        $result = Betfair::betting('listEvents', ['filter' => ['textQuery' => 'Serie A']]);
-var_dump($result);
+        $result = Betfair::betting('listEvents', ['filter' => ['textQuery' => 'English']]);
+
         if (count($result)) {
             $this->assertTrue(strpos($result[0]->event->name, 'English') !== 0);
         }
