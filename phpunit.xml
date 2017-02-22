@@ -13,7 +13,6 @@
     <testsuites>
         <testsuite name="integration">
             <directory>tests/Integration</directory>
-            <exclude>tests/Integration/Accounts/TransferFundsTest.php</exclude>
         </testsuite>
     </testsuites>
 </phpunit>
