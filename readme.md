@@ -33,7 +33,7 @@ All requests require to you be logged in to the Betfair Exchange, otherwise it w
 ```
 Betfair::init(string <app-key>, string <username>, string <password>);
 ```
-On a first call it will store your APP_KEY, then login and retrieve a SESSION_TOKEN and finally stire that token. The app key and session token will be used to authenticate all subsequent requests. It's safe, indeed recommended, to call init() before each group of requests. If there's an active session already, it will simply extend this session rather than logging in again.
+On a first call it will store your APP_KEY, then login and retrieve a SESSION_TOKEN and finally store that token. The app key and session token will be used to authenticate all subsequent requests. It's safe, indeed recommended, to call init() before each group of requests. If there's an active session already, it will simply extend this session rather than logging in again.
 
 Authentication information will only exist for the current request (i.e. web page or CLI command) has completed, but will be available for as many Betfair accesses as you attempt within that request. To share the the authentication credentials across requests, e.g. avoid the need to login on each page load, the package offers the following option:
 ```
