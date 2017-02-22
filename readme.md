@@ -62,6 +62,15 @@ Account API calls follow the same pattern:
 Betfair::account(string <name-of-method>, array <params-for-method>);
 ```
 
+## Example
+
+To make this real, here's a simple example, where we'll first initialise a connection to the API and then request a list of all current events listed for the Italian Serie A soccer league:
+
+```
+Betfair::init('BetfairAppKeyHere', 'you@example.com', 'your-password');
+$events = Betfair::betting('listEvents', ['filter' => ['textQuery' => 'Serie A']]);
+```
+
 ## Testing
 
 The package comes with two test suites (or at least soon will). The "unit" test suite (when written) simulate http activity (i.e. won't hit the Betfair servers), however the "integration" test suite will test connectivity and the acceptability of requests so will need valid credentials. These should be placed in a file called .env.php which can be created by copying the .env.example.php file in the package's root folder.
