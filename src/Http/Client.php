@@ -6,6 +6,7 @@ use Exception;
 use GuzzleHttp\Client as GuzzleClient;
 use Psr\Http\Message\ResponseInterface;
 use PeterColes\Betfair\Api\Auth;
+use GuzzleHttp\Exception\ClientException;
 
 class Client
 {
@@ -114,15 +115,13 @@ class Client
      */
     public function send()
     {
-        $response = $this->guzzleClient->request($this->method, $this->uri, $this->options);
-
-        $body = $this->getBody($response);
-
-        if (is_object($body) && isset($body->status) && $body->status != 'SUCCESS') {
-            $this->handleApiException($body->error);
+        try {
+            $response = $this->guzzleClient->request($this->method, $this->uri, $this->options);
+        } catch (ClientException $e) {
+            $this->handleApiException($e->getResponse()->getBody()->getContents());
         }
 
-        return $body;
+        return $this->getBody($response);
     }
 
     /**
