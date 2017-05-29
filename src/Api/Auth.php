@@ -2,7 +2,7 @@
 
 namespace PeterColes\Betfair\Api;
 
-use PeterColes\Betfair\Api\BaseApi;
+use Exception;
 
 class Auth extends BaseApi
 {
@@ -15,6 +15,11 @@ class Auth extends BaseApi
      * 4 hours, expressed in seconds
      */
     const SESSION_LENGTH = 4 * 60 * 60;
+
+    /**
+     * API fail status
+     */
+    const API_STATUS_FAIL = 'FAIL';
 
     /**
      * Application key, provided by Betfair on registration
@@ -68,6 +73,8 @@ class Auth extends BaseApi
      * @param  string $appKey
      * @param  string $username
      * @param  string $password
+     * @return string
+     * @throws Exception
      */
     public function login($appKey, $username, $password)
     {
@@ -77,6 +84,10 @@ class Auth extends BaseApi
             ->authHeaders([ 'X-Application' => $appKey ])
             ->setFormData([ 'username' => $username, 'password' => $password ])
             ->send();
+
+        if ($result->status === self::API_STATUS_FAIL) {
+            throw new Exception('Error: '.$result->error);
+        }
 
         self::$lastLogin = time();
 
@@ -117,6 +128,10 @@ class Auth extends BaseApi
      */
     public function sessionRemaining()
     {
+        if (! self::$sessionToken) {
+            return 0;
+        }
+
         return self::$lastLogin + self::SESSION_LENGTH - time();
     }
 }
