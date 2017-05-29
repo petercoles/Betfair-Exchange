@@ -128,7 +128,7 @@ class Auth extends BaseApi
      */
     public function sessionRemaining()
     {
-        if (! self::$sessionToken) {
+        if (self::$sessionToken === null) {
             return 0;
         }
 
