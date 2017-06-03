@@ -121,7 +121,7 @@ class Auth extends BaseApi
      */
     public function logout()
     {
-        $result = $this->execute($this->httpClient->setEndPoint(self::ENDPOINT.'logout/'));
+        $this->execute($this->httpClient->setEndPoint(self::ENDPOINT.'logout/'));
 
         self::$appKey = null;
         self::$sessionToken = null;
