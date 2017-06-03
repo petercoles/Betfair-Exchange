@@ -76,9 +76,6 @@ class AuthTest extends BaseTest
 
         Betfair::auth()->logout();
 
-        // First logout is fine, but the second should throw a NO_SESSION exception.
-        // We can't yet tell of that is the exception being thown and
-        // need more extensive exception handling (planned) to be sure.
         $this->setExpectedException('Exception');
         Betfair::auth()->logout();
     }

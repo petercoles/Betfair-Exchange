@@ -104,6 +104,7 @@ class Auth extends BaseApi
      * Execute Betfair API call to extend the current session
      *
      * @return string
+     * @throws Exception
      */
     public function keepAlive()
     {
@@ -124,13 +125,19 @@ class Auth extends BaseApi
     /**
      * Execute Betfair API call to logout from their system.
      * Clear all local references to the session.
+     *
+     * @throws Exception
      */
     public function logout()
     {
-        $this->httpClient
+        $result = $this->httpClient
             ->setEndPoint(self::ENDPOINT.'logout/')
             ->authHeaders()
             ->send();
+
+        if ($result->status === self::API_STATUS_FAIL) {
+            throw new Exception('Error: '.$result->error);
+        }
 
         self::$appKey = null;
         self::$sessionToken = null;
