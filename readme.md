@@ -23,6 +23,8 @@ composer require petercoles/betfair-exchange
 
 ## Usage
 
+### Authenticating a Single Process (simple)
+
 Currently the package has been tested against the UK exchange only. Most methods are now in place, but order placement and similar still need testing.
 
 You will need to have a [Betfair developer account](https://developer.betfair.com/) with that Exchange and have obtained a APP_KEY from it - there's no charge for this, or indeed using the API for personal use.
@@ -35,22 +37,45 @@ Betfair::init(string <app-key>, string <username>, string <password>);
 ```
 On a first call it will store your APP_KEY, then login and retrieve a SESSION_TOKEN and finally store that token. The app key and session token will be used to authenticate all subsequent requests. It's safe, indeed recommended, to call init() before each group of requests. If there's an active session already, it will simply extend this session rather than logging in again.
 
-Authentication information will only exist for the current request (i.e. web page or CLI command) has completed, but will be available for as many Betfair accesses as you attempt within that request. To share the the authentication credentials across requests, e.g. avoid the need to login on each page load, the package offers the following option:
-```
-Betfair::persist(string <app-key>, string <session-token>);
-```
-This assumes that you are storing the credentials in a PHP session, a cache or a database, indeed anywhere were they can be accessed by a request and passed as parameters to this method. It will ensure that they are available to be appended to each Betfair API call. The normal flow will be a single call to Betfair::init(), obtain the session key from PeterColes\Betfair\Api\Auth::$sessionToken, and then a call to Betfair::persist() for all subsequent requests.
+Authentication information will only exist for the current process (i.e. web page request or CLI command) has completed, but will be available for as many Betfair accesses as you attempt within that request.
 
-Four other authentication methods are available, though it's unlikely that you'll need to use them
+### Authenticating Multiple Processes (recommended)
+
+To share the the authentication credentials across multiple requests, e.g. avoid the need to login on each ajax request, the package offers the following options:
 ```
-. login(string <app-key>, string <username>, string <password>);
+string Betfair::auth()->persist(string <app-key>, string <session-token>);
+string Betfair::auth()->login(string <app-key>, string <username>, string <password>);
+```
+This assumes that you are storing the credentials in a PHP session, a cache or a database, indeed anywhere where it can be accessed by a request and passed as a parameter to this method.
+
+An effective approach for this would be:
+```
+try {
+    // persist Betfair session, injecting Betfair session token (or NULL)
+    $token = Cache::get('betfairToken', null);
+    Betfair::auth()->persist(<app-key>, $token);
+} catch (Exception $e) {
+    // or retrieve new Betfair session token and 
+    $token = Betfair::auth()->login(<app-key>, <username>, <password>);
+    Cache::put('betfairToken', $token, \PeterColes\Betfair\Api\Auth::SESSION_LENGTH);
+}
+```
+(this example uses Laravel's caching features - substitute an approach appropriate for your application).
+
+If a null session token is received, the package will not make a call to Betafir. Instead it will immediately throw an exception that can be caught (as in the example above) to login and obtain a token that can be persisted for subsequent requests. This can be useful for the first request, or subsequent requests where the token may have expired.
+
+Three other authentication methods are available, though it's unlikely that you'll need to use them
+```
 . logout();
 . keepAlive();
 . sessionremaining();
 ```
-If you're manually managing your sessions, you could use the keep alive method to extend your Betfair session, though the persist method described above is usually a better soltion. Betfair sessions for the UK exchange are currently 4 hours long.
 
-Betting information can be obtained from the betting subsystem. All calls have the same structure:
+If you're manually managing your Betfair sessions, you could use the keep alive method to extend your Betfair session, though the persist method described above is usually a better soltion. Betfair sessions for the UK exchange are currently 4 hours long.
+
+### Obtaining Data
+
+Once authenticated, betting information can be obtained from the betting subsystem. All calls have the same structure:
 ```
 Betfair::betting(string <name-of-method>, array <params-for-method>);
 
@@ -62,6 +87,7 @@ Account API calls follow the same pattern:
 Betfair::account(string <name-of-method>, array <params-for-method>);
 ```
 
+
 ## Example
 
 To make this real, here's a simple example, where we'll first initialise a connection to the API and then request a list of all current events listed for the Italian Serie A soccer league:
@@ -70,6 +96,7 @@ To make this real, here's a simple example, where we'll first initialise a conne
 Betfair::init('BetfairAppKeyHere', 'you@example.com', 'your-password');
 $events = Betfair::betting('listEvents', ['filter' => ['textQuery' => 'Serie A']]);
 ```
+
 
 ## Testing
 
@@ -82,6 +109,7 @@ phpunit --testsuite=integration
 ```
 
 It's recommended that you only run the tests via the test suites, as some tests are deliberately excluded to avoid unintended placement of orders or movement of funds.
+
 
 ## Issues
 

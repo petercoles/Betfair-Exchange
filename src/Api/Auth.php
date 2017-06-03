@@ -58,12 +58,18 @@ class Auth extends BaseApi
      *
      * @param  string $appKey
      * @param  string $sessionToken
+     * @return string
      */
     public function persist($appKey, $sessionToken)
     {
+        if (!$sessionToken) {
+            throw new Exception('Invalid session token');
+        }
+
         self::$appKey = $appKey;
         self::$sessionToken = $sessionToken;
-        $this->keepAlive();
+
+        return $this->keepAlive();
     }
 
     /**
@@ -96,15 +102,23 @@ class Auth extends BaseApi
 
     /**
      * Execute Betfair API call to extend the current session
+     *
+     * @return string
      */
     public function keepAlive()
     {
-        $this->httpClient
+        $result = $this->httpClient
             ->setEndPoint(self::ENDPOINT.'keepAlive/')
             ->authHeaders()
             ->send();
 
+        if ($result->status === self::API_STATUS_FAIL) {
+            throw new Exception('Error: '.$result->error);
+        }
+
         self::$lastLogin = time();
+
+        return $result->token;
     }
 
     /**
@@ -125,6 +139,8 @@ class Auth extends BaseApi
 
     /**
      * Calculate and provide the time remaining until the current session token expires
+     *
+     * @return integer
      */
     public function sessionRemaining()
     {
