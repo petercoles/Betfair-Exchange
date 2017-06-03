@@ -84,16 +84,14 @@ class Auth extends BaseApi
      */
     public function login($appKey, $username, $password)
     {
-        $result = $this->httpClient
+        self::$appKey = $appKey;
+
+        $request = $this->httpClient
             ->setMethod('post')
             ->setEndPoint(self::ENDPOINT.'login/')
-            ->authHeaders([ 'X-Application' => $appKey ])
-            ->setFormData([ 'username' => $username, 'password' => $password ])
-            ->send();
+            ->setFormData([ 'username' => $username, 'password' => $password ]);
 
-        if ($result->status === self::API_STATUS_FAIL) {
-            throw new Exception('Error: '.$result->error);
-        }
+        $result = $this->execute($request);
 
         self::$lastLogin = time();
 
@@ -108,14 +106,7 @@ class Auth extends BaseApi
      */
     public function keepAlive()
     {
-        $result = $this->httpClient
-            ->setEndPoint(self::ENDPOINT.'keepAlive/')
-            ->authHeaders()
-            ->send();
-
-        if ($result->status === self::API_STATUS_FAIL) {
-            throw new Exception('Error: '.$result->error);
-        }
+        $result = $this->execute($this->httpClient->setEndPoint(self::ENDPOINT.'keepAlive/'));
 
         self::$lastLogin = time();
 
@@ -130,14 +121,7 @@ class Auth extends BaseApi
      */
     public function logout()
     {
-        $result = $this->httpClient
-            ->setEndPoint(self::ENDPOINT.'logout/')
-            ->authHeaders()
-            ->send();
-
-        if ($result->status === self::API_STATUS_FAIL) {
-            throw new Exception('Error: '.$result->error);
-        }
+        $result = $this->execute($this->httpClient->setEndPoint(self::ENDPOINT.'logout/'));
 
         self::$appKey = null;
         self::$sessionToken = null;
@@ -156,5 +140,16 @@ class Auth extends BaseApi
         }
 
         return self::$lastLogin + self::SESSION_LENGTH - time();
+    }
+
+    public function execute($request)
+    {
+        $result = $request->authHeaders()->send();
+
+        if ($result->status === self::API_STATUS_FAIL) {
+            throw new Exception('Error: '.$result->error);
+        }
+
+        return $result;
     }
 }
