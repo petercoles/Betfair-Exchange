@@ -80,7 +80,6 @@ class Auth extends BaseApi
      * @param  string $username
      * @param  string $password
      * @return string
-     * @throws Exception
      */
     public function login($appKey, $username, $password)
     {
@@ -102,7 +101,6 @@ class Auth extends BaseApi
      * Execute Betfair API call to extend the current session
      *
      * @return string
-     * @throws Exception
      */
     public function keepAlive()
     {
@@ -116,8 +114,6 @@ class Auth extends BaseApi
     /**
      * Execute Betfair API call to logout from their system.
      * Clear all local references to the session.
-     *
-     * @throws Exception
      */
     public function logout()
     {
@@ -142,6 +138,10 @@ class Auth extends BaseApi
         return self::$lastLogin + self::SESSION_LENGTH - time();
     }
 
+    /**
+     * @param  \PeterColes\Betfair\Http\Client $request
+     * @throws Exception
+     */
     public function execute($request)
     {
         $result = $request->authHeaders()->send();
