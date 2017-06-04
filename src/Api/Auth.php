@@ -62,7 +62,7 @@ class Auth extends BaseApi
      */
     public function persist($appKey, $sessionToken)
     {
-        if (!$sessionToken) {
+        if ($sessionToken === null) {
             throw new Exception('Invalid session token');
         }
 
