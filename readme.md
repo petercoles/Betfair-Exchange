@@ -52,18 +52,21 @@ This assumes that you are storing the credentials in a PHP session, a cache or a
 An effective approach for this would be:
 
 ``` php
-try {
-    // persist Betfair session, injecting Betfair session token (or NULL)
-    $token = Cache::get('betfairToken', null);
-    Betfair::auth()->persist(<app-key>, $token);
-} catch (Exception $e) {
-    // or retrieve new Betfair session token and cache it
-    $token = Betfair::auth()->login(<app-key>, <username>, <password>);
+// retreive Betfair session token from cache and if it doesn't exist ...
+// ... login and get one and save it to the cache
+if (!($token = Cache::get('betfairToken'))) {
+    $token = Betfair::auth()->login(
+        config('betfair.app-key'), config('betfair.username'), config('betfair.password')
+    );
     Cache::put('betfairToken', $token, \PeterColes\Betfair\Api\Auth::SESSION_LENGTH);
 }
+
+// Persist the application key and session token, which means make them class variables
+// in a singleton class and therefore available for the life of the script.
+Betfair::auth()->persist(config('betfair.app-key'), $token);
 ```
 
-(this example uses Laravel's caching features - substitute an approach appropriate for your application).
+(this example uses Laravel's caching and config features - substitute an approach appropriate for your application).
 
 If a null session token is received, the package will not make a call to Betafir. Instead it will immediately throw an exception that can be caught (as in the example above) to login and obtain a token that can be persisted for subsequent requests. This can be useful for the first request, or subsequent requests where the token may have expired.
 
