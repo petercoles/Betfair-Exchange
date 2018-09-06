@@ -100,11 +100,13 @@ $events = Betfair::betting('listEvents', ['filter' => ['textQuery' => 'Serie A']
 
 ## Testing
 
-The package comes with two test suites (or at least soon will). The "unit" test suite (when written) simulate http activity (i.e. won't hit the Betfair servers), however the "integration" test suite will test connectivity and the acceptability of requests so will need valid credentials. These should be placed in a file called .env.php which can be created by copying the .env.example.php file in the package's root folder.
+The package comes with two test suites (or at least will do). The "unit" test suite (when written) simulate http activity (i.e. won't hit the Betfair servers), however the "integration" test suite will test connectivity and the acceptability of requests so will need valid credentials.
+
+A valid Betfair account for testing is not provided by this package! so to run the tests rename the phpunit.xml.dist to phpunit.xml and edit it to add your Betfair, app key, username and password.
 
 To run the test suites:
 ```
-phpunit --testsuite=unit (coming soon)
+phpunit --testsuite=unit (not yet available)
 phpunit --testsuite=integration
 ```
 

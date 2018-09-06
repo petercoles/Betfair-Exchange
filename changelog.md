@@ -5,6 +5,7 @@
 Update dev packages: PHPUnit and Mockery (they've moved on a long way) and more permissive versions for Guzzle and the Tighten Collections package.
 Code changes to deal with approaches deprecated in, or removed from, packages since the older versions (I'm looking at you PHPUnit).
 Shouldn't be any significant function changes, but a new tag is added to allow locking onto the previous version if these are incompatible with other parts of your application.
+Move testing config to phpunit.xml file.
 
 ## 1.1
 
