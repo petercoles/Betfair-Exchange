@@ -3,10 +3,11 @@
 namespace PeterColes\Tests\Integration;
 
 use PeterColes\Betfair\Betfair;
+use PHPUnit\Framework\TestCase;
 
 require '.env.php'; // load authentication credentials
 
-abstract class BaseTest extends \PHPUnit_Framework_TestCase
+abstract class BaseTest extends TestCase
 {
     protected function setUp()
     {

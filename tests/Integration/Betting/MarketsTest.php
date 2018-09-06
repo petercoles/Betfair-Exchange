@@ -11,8 +11,8 @@ class MarketsTest extends BaseTest
     {
         $result = Betfair::betting('listMarketCatalogue');
 
-        $this->assertObjectHasAttribute('marketId', $result[ 0 ]);
-        $this->assertObjectHasAttribute('marketName', $result[ 0 ]);
+        $this->assertObjectHasAttribute('marketId', $result[0]);
+        $this->assertObjectHasAttribute('marketName', $result[0]);
     }
 
     public function testListMarketCatalogueFilterByEventIdOnly()
@@ -20,10 +20,10 @@ class MarketsTest extends BaseTest
         // get an event that we can work with
         $events = collect(Betfair::betting('listEvents', ['sortByDesc' => 'marketCount']))->values();
 
-        if (count($events) > 0 && $events[ 0 ]->marketCount > 0) {
-            $result = Betfair::betting('listMarketCatalogue', ['filter' => ['eventIds' => [$events[ 0 ]->event->id]]]);
+        if (count($events) > 0 && $events[0]->marketCount > 0) {
+            $result = Betfair::betting('listMarketCatalogue', ['filter' => ['eventIds' => [$events[0]->event->id]]]);
 
-            $this->assertEquals($events[ 0 ]->marketCount, count($result));
+            $this->assertEquals($events[0]->marketCount, count($result));
         }
     }
 
@@ -32,10 +32,10 @@ class MarketsTest extends BaseTest
         // get an event that we can work with
         $events = collect(Betfair::betting('listEvents'))->sortByDesc('marketCount')->values();
 
-        if (count($events) > 0 && $events[ 0 ]->marketCount > 0) {
+        if (count($events) > 0 && $events[0]->marketCount > 0) {
             $result = Betfair::betting('listMarketCatalogue', [
-                'filter' => ['eventIds' => [$events[ 0 ]->event->id]],
-                'marketProjection' => [ 'COMPETITION', 'EVENT', 'EVENT_TYPE', 'MARKET_START_TIME', 'MARKET_DESCRIPTION', 'RUNNER_DESCRIPTION', 'RUNNER_METADATA' ],
+                'filter' => ['eventIds' => [$events[0]->event->id]],
+                'marketProjection' => ['COMPETITION', 'EVENT', 'EVENT_TYPE', 'MARKET_START_TIME', 'MARKET_DESCRIPTION', 'RUNNER_DESCRIPTION', 'RUNNER_METADATA'],
                 'sort' => 'MAXIMUM_TRADED',
                 'maxResults' => 2,
                 'locale' => 'it'
@@ -56,7 +56,7 @@ class MarketsTest extends BaseTest
     {
         $events = collect(Betfair::betting('listEvents'))->sortByDesc('marketCount')->values();
         $markets = Betfair::betting('listMarketCatalogue', ['filter' => ['eventIds' => [$events[0]->event->id]]]);
-        $result = Betfair::betting('listMarketBook', [ 'marketIds' => [$markets[0]->marketId]]);
+        $result = Betfair::betting('listMarketBook', ['marketIds' => [$markets[0]->marketId]]);
 
         $this->assertObjectHasAttribute('numberOfRunners', $result[0]);
         $this->assertObjectHasAttribute('runners', $result[0]);
@@ -76,7 +76,7 @@ class MarketsTest extends BaseTest
         ]);
 
         $this->assertObjectHasAttribute('ex', $result[0]->runners[0]);
-    }  
+    }
 
     public function testListMarketProfitAndLossWithMarketIdOnly()
     {
@@ -94,13 +94,13 @@ class MarketsTest extends BaseTest
         $events = collect(Betfair::betting('listEvents'))->sortByDesc('marketCount')->values();
         $markets = Betfair::betting('listMarketCatalogue', ['filter' => ['eventIds' => [$events[0]->event->id]]]);
         $result = Betfair::betting('listMarketProfitAndLoss', [
-            'marketIds' => [ $markets[0]->marketId ],
+            'marketIds' => [$markets[0]->marketId],
             'includeSettledBets' => true,
             'includeBspBets' => true,
             'netOfCommission' => true,
         ]);
 
-        // the parameters will cause this extra attribute to be included, even in an "empty" response object 
+        // the parameters will cause this extra attribute to be included, even in an "empty" response object
         $this->assertObjectHasAttribute('commissionApplied', $result[0]);
     }
 }

@@ -76,7 +76,7 @@ class AuthTest extends BaseTest
 
         Betfair::auth()->logout();
 
-        $this->setExpectedException('Exception');
+        $this->expectException('Exception');
         Betfair::auth()->logout();
     }
 
