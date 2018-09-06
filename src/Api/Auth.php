@@ -90,8 +90,8 @@ class Auth extends BaseApi
 
         $request = $this->httpClient
             ->setMethod('post')
-            ->setEndPoint(self::ENDPOINT . 'login/')
-            ->setFormData(['username' => $username, 'password' => $password]);
+            ->setEndPoint(self::ENDPOINT.'login/')
+            ->setFormData([ 'username' => $username, 'password' => $password ]);
 
         $result = $this->execute($request);
 
@@ -110,7 +110,7 @@ class Auth extends BaseApi
      */
     public function keepAlive()
     {
-        $result = $this->execute($this->httpClient->setEndPoint(self::ENDPOINT . 'keepAlive/'));
+        $result = $this->execute($this->httpClient->setEndPoint(self::ENDPOINT.'keepAlive/'));
 
         self::$lastLogin = time();
 
@@ -125,7 +125,7 @@ class Auth extends BaseApi
      */
     public function logout()
     {
-        $this->execute($this->httpClient->setEndPoint(self::ENDPOINT . 'logout/'));
+        $this->execute($this->httpClient->setEndPoint(self::ENDPOINT.'logout/'));
 
         self::$appKey = null;
         self::$sessionToken = null;
@@ -158,7 +158,7 @@ class Auth extends BaseApi
         $result = $request->authHeaders()->send();
 
         if ($result->status === self::API_STATUS_FAIL) {
-            throw new Exception('Error: ' . $result->error);
+            throw new Exception('Error: '.$result->error);
         }
 
         return $result;
