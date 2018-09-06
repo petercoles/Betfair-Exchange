@@ -37,7 +37,10 @@ class Auth extends BaseApi
     public static $lastLogin = null;
 
     /**
-     * Wrapper method for other methods to initiate and manage a Betfair session
+     * Wrapper method for other methods to initiate and manage a Betfair session.
+     * This method can be called safely multiple times in a script, or in a loop
+     * for a long running process and will only trigger the authentication overhead
+     * when really needed.
      *
      * @param  string $appKey
      * @param  string $username
@@ -48,13 +51,12 @@ class Auth extends BaseApi
         if ($appKey == self::$appKey && $this->sessionRemaining() > 5) {
             $this->keepAlive();
         } else {
-            self::$appKey = $appKey;
-            self::$sessionToken = $this->login($appKey, $username, $password);
+            $this->login($appKey, $username, $password);
         }
     }
 
     /**
-     * Accept app key and session token and extend session
+     * Accept app key and session token and extend session.
      *
      * @param  string $appKey
      * @param  string $sessionToken
@@ -62,7 +64,7 @@ class Auth extends BaseApi
      */
     public function persist($appKey, $sessionToken)
     {
-        if ($sessionToken === null) {
+        if (!$sessionToken) {
             throw new Exception('Invalid session token');
         }
 
@@ -74,12 +76,13 @@ class Auth extends BaseApi
 
     /**
      * Method to directly execute Betfair login request.
-     * For use only when the init() method isn't appropriate
+     * For use only when the init() method isn't appropriate.
      *
      * @param  string $appKey
      * @param  string $username
      * @param  string $password
      * @return string
+     * @throws Exception
      */
     public function login($appKey, $username, $password)
     {
@@ -87,24 +90,27 @@ class Auth extends BaseApi
 
         $request = $this->httpClient
             ->setMethod('post')
-            ->setEndPoint(self::ENDPOINT.'login/')
-            ->setFormData([ 'username' => $username, 'password' => $password ]);
+            ->setEndPoint(self::ENDPOINT . 'login/')
+            ->setFormData(['username' => $username, 'password' => $password]);
 
         $result = $this->execute($request);
 
+        self::$sessionToken = $result->token;
         self::$lastLogin = time();
 
         return $result->token;
     }
 
     /**
-     * Execute Betfair API call to extend the current session
+     * Execute Betfair API call to extend the current session.
+     * Implicitly uses the already set app key and session token.
      *
      * @return string
+     * @throws Exception
      */
     public function keepAlive()
     {
-        $result = $this->execute($this->httpClient->setEndPoint(self::ENDPOINT.'keepAlive/'));
+        $result = $this->execute($this->httpClient->setEndPoint(self::ENDPOINT . 'keepAlive/'));
 
         self::$lastLogin = time();
 
@@ -114,10 +120,12 @@ class Auth extends BaseApi
     /**
      * Execute Betfair API call to logout from their system.
      * Clear all local references to the session.
+     *
+     * @throws Exception
      */
     public function logout()
     {
-        $this->execute($this->httpClient->setEndPoint(self::ENDPOINT.'logout/'));
+        $result = $this->execute($this->httpClient->setEndPoint(self::ENDPOINT . 'logout/'));
 
         self::$appKey = null;
         self::$sessionToken = null;
@@ -125,7 +133,7 @@ class Auth extends BaseApi
     }
 
     /**
-     * Calculate and provide the time remaining until the current session token expires
+     * Calculate and provide the time remaining until the current session token expires.
      *
      * @return integer
      */
@@ -139,7 +147,10 @@ class Auth extends BaseApi
     }
 
     /**
+     * Accept request, add auth headers and dispatch, then respond to any errors.
+     *
      * @param  \PeterColes\Betfair\Http\Client $request
+     * @return Mixed
      * @throws Exception
      */
     public function execute($request)
@@ -147,7 +158,7 @@ class Auth extends BaseApi
         $result = $request->authHeaders()->send();
 
         if ($result->status === self::API_STATUS_FAIL) {
-            throw new Exception('Error: '.$result->error);
+            throw new Exception('Error: ' . $result->error);
         }
 
         return $result;
