@@ -64,7 +64,7 @@ class Auth extends BaseApi
      */
     public function persist($appKey, $sessionToken)
     {
-        if (!$sessionToken) {
+        if ($sessionToken === null) {
             throw new Exception('Invalid session token');
         }
 
@@ -125,7 +125,7 @@ class Auth extends BaseApi
      */
     public function logout()
     {
-        $result = $this->execute($this->httpClient->setEndPoint(self::ENDPOINT . 'logout/'));
+        $this->execute($this->httpClient->setEndPoint(self::ENDPOINT . 'logout/'));
 
         self::$appKey = null;
         self::$sessionToken = null;
