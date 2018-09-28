@@ -26,7 +26,11 @@
   },
   "autoload": {
     "psr-4": {
-      "PeterColes\\Betfair\\": "src/",
+      "PeterColes\\Betfair\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "PeterColes\\Tests\\": "tests/"
     }
   }
