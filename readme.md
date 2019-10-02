@@ -52,7 +52,7 @@ This assumes that you are storing the credentials in a PHP session, a cache or a
 An effective approach for this would be:
 
 ``` php
-// retreive Betfair session token from cache and if it doesn't exist ...
+// retrieve Betfair session token from cache and if it doesn't exist ...
 // ... login and get one and save it to the cache
 if (!($token = Cache::get('betfairToken'))) {
     $token = Betfair::auth()->login(
@@ -68,7 +68,7 @@ Betfair::auth()->persist(config('betfair.app-key'), $token);
 
 (this example uses Laravel's caching and config features - substitute an approach appropriate for your application).
 
-If a null session token is received, the package will not make a call to Betafir. Instead it will immediately throw an exception that can be caught (as in the example above) to login and obtain a token that can be persisted for subsequent requests. This can be useful for the first request, or subsequent requests where the token may have expired.
+If a null session token is received, the package will not make a call to Betfair. Instead it will immediately throw an exception that can be caught (as in the example above) to login and obtain a token that can be persisted for subsequent requests. This can be useful for the first request, or subsequent requests where the token may have expired.
 
 Three other authentication methods are available, though it's unlikely that you'll need to use them
 
