@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class BaseTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->appKey = getenv('APP_KEY');
         $this->username = getenv('USERNAME');

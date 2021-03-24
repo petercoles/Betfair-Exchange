@@ -88,9 +88,4 @@ class AuthTest extends BaseTest
 
         $this->assertEquals(Auth::SESSION_LENGTH - 2, Betfair::auth()->sessionRemaining());
     }
-
-    public function testInitAlias()
-    {
-        Betfair::init($this->appKey, $this->username, $this->password);
-    }
 }

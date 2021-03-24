@@ -1,4 +1,4 @@
 /vendor
 composer.lock
-.env.php
 phpunit.xml
+.phpunit.result.cache
