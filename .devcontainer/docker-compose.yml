@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  pipeline:
+    build: .
+    env_file:
+      - ../.env
+    tty: true
