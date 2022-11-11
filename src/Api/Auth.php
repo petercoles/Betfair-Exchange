@@ -12,9 +12,10 @@ class Auth extends BaseApi
     const ENDPOINT = 'https://identitysso.betfair.com/api/';
 
     /**
-     * 24 hours, expressed in seconds
+     * 12 hours for the international exchange, expressed in seconds
+     * (Note that some exchanges e.g. Italian are shorter)
      */
-    const SESSION_LENGTH = 24 * 60 * 60;
+    const SESSION_LENGTH = 12 * 60 * 60;
 
     /**
      * API fail status
